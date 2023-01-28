@@ -13,7 +13,6 @@ public class PlayerInput : MonoBehaviour
             return;
         }
         current = this;
-        DontDestroyOnLoad(this);
     }
 
     [SerializeField]
@@ -23,16 +22,23 @@ public class PlayerInput : MonoBehaviour
     private void OnEnable()
     {
         leftMouseClick.action.performed += OnLeftMouseClick;
-        escKeyboardClick.action.performed += OnRightMouseClick;
+        escKeyboardClick.action.performed += OnEscClick;
     }
 
     private void OnDisable()
     {
         leftMouseClick.action.performed -= OnLeftMouseClick;
-        escKeyboardClick.action.performed -= OnRightMouseClick;
+        escKeyboardClick.action.performed -= OnEscClick;
     }
 
-    private void OnLeftMouseClick(InputAction.CallbackContext obj) { }
+    private void OnLeftMouseClick(InputAction.CallbackContext obj)
+    {
+        if (PlayerInfo.current == null)
+        {
+            return;
+        }
+        PlayerInfo.current.handlePlayerClick();
+    }
 
-    private void OnRightMouseClick(InputAction.CallbackContext obj) { }
+    private void OnEscClick(InputAction.CallbackContext obj) { }
 }

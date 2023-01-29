@@ -97,3 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbd546ed0b19ee419bd772d7a96e8fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isAlive: 0
+  _boardCellLevel: 0
+  boardCellSprites: {fileID: 11400000, guid: 7492724158c866d43ab95bc103d988a6, type: 2}
+  type: 0

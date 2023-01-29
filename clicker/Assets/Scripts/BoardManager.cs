@@ -10,7 +10,7 @@ public class BoardManager : MonoBehaviour
     private GameObject boardCellPrefab;
 
     // Temp varaible delete/replace later
-    private Vector2 tempAnchorPoint = new Vector2(-4.5f, -4.5f);
+    private Vector2 tempAnchorPoint = new Vector2(-7.5f, -4f);
 
     private int size;
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerStats
 {
@@ -29,6 +30,8 @@ public class PlayerInfo : MonoBehaviour
 
     public PlayerStats playerStats;
 
+    private LayerMask clickableLayerMask;
+
     private void Awake()
     {
         if (current != null)
@@ -37,6 +40,7 @@ public class PlayerInfo : MonoBehaviour
             return;
         }
         current = this;
+        clickableLayerMask = LayerMask.GetMask("Clickable");
     }
 
     // Start is called before the first frame update
@@ -45,14 +49,21 @@ public class PlayerInfo : MonoBehaviour
         playerStats = new PlayerStats();
     }
 
-    private bool isClickable = true;
-
     public void handlePlayerClick()
     {
-        if (!isClickable)
+        Vector3 mousePosition = Mouse.current.position.ReadValue();
+        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+        RaycastHit2D hit = Physics2D.GetRayIntersection(ray, 40, clickableLayerMask);
+        if (hit.collider == null)
         {
             return;
         }
+
+        this.handleTick();
+    }
+
+    public void handleTick()
+    {
         playerStats.totalGold = playerStats.totalGold + playerStats.goldPerClick;
     }
 }

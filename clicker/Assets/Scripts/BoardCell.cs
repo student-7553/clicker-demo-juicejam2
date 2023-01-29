@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class BoardCell : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private bool _isActive;
+
+    public bool isAlive
     {
-        
+        get { return _isActive; }
+        set { _isActive = value; }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        _isActive = false;
     }
 }

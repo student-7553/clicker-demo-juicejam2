@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[DefaultExecutionOrder(10)]
 public class PlayerStats
 {
     public int totalGold;
@@ -32,6 +31,8 @@ public class PlayerInfo : MonoBehaviour
 
     private LayerMask clickableLayerMask;
 
+    // public Camera mainCamera;
+
     private void Awake()
     {
         if (current != null)
@@ -53,6 +54,7 @@ public class PlayerInfo : MonoBehaviour
     {
         Vector3 mousePosition = Mouse.current.position.ReadValue();
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+        // Ray ray = mainCamera.ScreenPointToRay(mousePosition);
         RaycastHit2D hit = Physics2D.GetRayIntersection(ray, 40, clickableLayerMask);
         if (hit.collider == null)
         {

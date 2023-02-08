@@ -3,17 +3,17 @@ using UnityEngine;
 public class BoardCellSpriteHandler
 {
     private SpriteRenderer spriteRenderer;
-    private BoardCellSprites boardCellSprites;
-    private BoardCellType boardCellType;
+    private Levels levelsHandler;
 
-    public BoardCellSpriteHandler(
-        SpriteRenderer _spriteRenderer,
-        BoardCellSprites _boardCellSprites
-    )
+    public BoardCellSpriteHandler(SpriteRenderer _spriteRenderer, Levels _levelsHandler)
     {
         spriteRenderer = _spriteRenderer;
-        boardCellSprites = _boardCellSprites;
+        levelsHandler = _levelsHandler;
     }
 
-    public void handleLevelChange(BoardCellType _type, BoardCellLevel _boardCellLevel) { }
+    public void handleLevel(SingleLevel level)
+    {
+        // change sprite with the one in level
+        // get the color from level and change it here
+    }
 }

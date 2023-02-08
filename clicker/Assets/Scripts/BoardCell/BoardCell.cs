@@ -11,9 +11,7 @@ public class BoardCell : MonoBehaviour
     public BoardCellLevel _boardCellLevel;
 
     [SerializeField]
-    private BoardCellSprites boardCellSprites;
-
-    public BoardCellType type;
+    private Levels levelsHandler;
 
     private BoardCellSpriteHandler boardCellSpriteHandler;
 
@@ -26,38 +24,22 @@ public class BoardCell : MonoBehaviour
         get { return _isAlive; }
     }
 
-    public BoardCellLevel boardCellLevel
-    {
-        get { return _boardCellLevel; }
-        set
-        {
-            if (_boardCellLevel == value)
-            {
-                return;
-            }
-            _boardCellLevel = value;
-            this.boardCellSpriteHandler.handleLevelChange(type, _boardCellLevel);
-        }
-    }
+    public void OnMouseEnter() { }
+
+    public void OnMouseExit() { }
 
     private void Awake()
     {
         _isAlive = false;
         SpriteRenderer spriteRenderer = GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
-        boardCellSpriteHandler = new BoardCellSpriteHandler(spriteRenderer, boardCellSprites);
+        boardCellSpriteHandler = new BoardCellSpriteHandler(spriteRenderer, levelsHandler);
     }
 
-    public void init(BoardCellType _type, BoardCellBaseStats _baseStats)
+    public void init(SingleLevel level)
     {
-        type = _type;
-        baseStats = _baseStats;
-        boardCellLevel = this.getLevel(baseStats);
+        // Make it alive
+        baseStats = level.runeStats;
         _isAlive = true;
-    }
-
-    private BoardCellLevel getLevel(BoardCellBaseStats _baseStats)
-    {
-        // Todo
-        return BoardCellLevel.LEVEL_1;
+        this.boardCellSpriteHandler.handleLevel(level);
     }
 }

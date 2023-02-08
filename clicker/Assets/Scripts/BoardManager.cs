@@ -9,8 +9,15 @@ public class BoardManager : MonoBehaviour
     [SerializeField]
     private GameObject boardCellPrefab;
 
-    // Temp varaible delete/replace later
-    private Vector2 tempAnchorPoint = new Vector2(-7.5f, -4f);
+    [SerializeField]
+    private Vector2 tempAnchorPoint;
+    private float gridSpace = 0.677f;
+    private float bottomOffsetSpace = 0.12f;
+
+    [SerializeField]
+    private Levels levelsHandler;
+
+    // private SingleLevel currenLevel;
 
     private int size;
 
@@ -20,6 +27,7 @@ public class BoardManager : MonoBehaviour
 
         // Don't have save file
         board = this.generateBoard();
+        this.initFirstCenterCell();
     }
 
     private List<List<BoardCell>> generateBoard()
@@ -46,12 +54,26 @@ public class BoardManager : MonoBehaviour
 
         Vector3 getCellPosition(int rowIndex, int columnIndex)
         {
-            Vector3 cellSpawnPostion = new Vector3(
-                tempAnchorPoint.x + rowIndex,
-                tempAnchorPoint.y + columnIndex,
-                0f
-            );
-            return cellSpawnPostion;
+            if (columnIndex % 2 == 0)
+            {
+                return new Vector3(
+                    tempAnchorPoint.x + (gridSpace * rowIndex),
+                    tempAnchorPoint.y
+                        + (gridSpace * columnIndex)
+                        - (bottomOffsetSpace * columnIndex),
+                    0f
+                );
+            }
+            else
+            {
+                return new Vector3(
+                    tempAnchorPoint.x + (gridSpace * rowIndex) - (gridSpace / 2),
+                    tempAnchorPoint.y
+                        + (gridSpace * columnIndex)
+                        - (bottomOffsetSpace * columnIndex),
+                    0f
+                );
+            }
         }
     }
 
@@ -61,6 +83,12 @@ public class BoardManager : MonoBehaviour
         {
             SceneManagerManager.current.mainGameLocalManagers.boardManager = this;
         }
+    }
+
+    private void initFirstCenterCell()
+    {
+        BoardCell centerCell = board[(int)size / 2][(int)size / 2];
+        centerCell.init(levelsHandler.levels[0]);
     }
 
     private void OnDestroy()

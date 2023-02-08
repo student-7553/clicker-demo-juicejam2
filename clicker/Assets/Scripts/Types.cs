@@ -1,10 +1,10 @@
-public enum BoardCellType
-{
-    GOLD_PER_CLICK,
-    GOLD_PER_SEC,
-    BOOST_ALL,
-    BOOST_SPECIFIC
-}
+// public enum BoardCellType
+// {
+//     GOLD_PER_CLICK,
+//     GOLD_PER_SEC,
+//     BOOST_ALL,
+//     BOOST_SPECIFIC
+// }
 
 public enum BoardCellLevel
 {
@@ -14,9 +14,15 @@ public enum BoardCellLevel
     LEVEL_4
 }
 
-public class BoardCellBaseStats
+// public class BoardCellBaseStats
+// {
+//     int goldPerClickIncease;
+//     int goldPeSecIncease;
+//     int boostAdjacentAll;
+// }
+public struct BoardCellBaseStats
 {
-    int goldPerClickIncease;
-    int goldPeSecIncease;
-    int boostAdjacentAll;
+    public int goldPerClickIncease;
+    public int goldPeSecIncease;
+    public int boostAdjacentAll;
 }

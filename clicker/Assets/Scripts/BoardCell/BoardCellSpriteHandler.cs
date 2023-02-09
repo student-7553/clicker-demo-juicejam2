@@ -2,18 +2,38 @@ using UnityEngine;
 
 public class BoardCellSpriteHandler
 {
-    private SpriteRenderer spriteRenderer;
-    private Levels levelsHandler;
+    public SpriteRenderer runeSpriteRenderer;
+    public SpriteRenderer borderSpriteRenderer;
+    public Levels levelsHandler;
 
-    public BoardCellSpriteHandler(SpriteRenderer _spriteRenderer, Levels _levelsHandler)
+    public float hoverBorderOpacity = 0.5f;
+    public float defaultOpacity = 0.3f;
+    public float deadOpacity = 0.15f;
+
+    public BoardCellSpriteHandler(
+        SpriteRenderer _runeSpriteRenderer,
+        SpriteRenderer _borderSpriteRenderer,
+        Levels _levelsHandler
+    )
     {
-        spriteRenderer = _spriteRenderer;
+        borderSpriteRenderer = _borderSpriteRenderer;
+        runeSpriteRenderer = _runeSpriteRenderer;
         levelsHandler = _levelsHandler;
+    }
+
+    public void onHover(bool isExiting = false)
+    {
+        borderSpriteRenderer.color = new Color(
+            borderSpriteRenderer.color.r,
+            borderSpriteRenderer.color.g,
+            borderSpriteRenderer.color.b,
+            isExiting ? defaultOpacity : hoverBorderOpacity
+        );
     }
 
     public void handleLevel(SingleLevel level)
     {
-        // change sprite with the one in level
-        // get the color from level and change it here
+        runeSpriteRenderer.sprite = level.sprite;
+        runeSpriteRenderer.color = level.color;
     }
 }

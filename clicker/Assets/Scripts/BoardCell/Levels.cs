@@ -8,9 +8,8 @@ public struct SingleLevel
     public Sprite sprite;
     public string name;
     public int scoreRequirement;
-    public string color;
-    public Vector2Int runePosition;
-    public BoardCellBaseStats runeStats;
+    public Color color;
+    public BoardCellRuneStats runeStats;
 };
 
 [CreateAssetMenu(

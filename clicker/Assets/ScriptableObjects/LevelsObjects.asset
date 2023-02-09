@@ -17,23 +17,53 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 6cf3ae8bc3d1cdb45a83ab98101b92b0, type: 3}
     name: The bud
     scoreRequirement: 10
+    color: {r: 0.4880741, g: 0.5660378, b: 0.5660378, a: 1}
+    runeStats:
+      goldPerClickIncease: 1
+      goldPeSecIncease: 0
+      boostAdjacentAll: 0
   - level: 2
     sprite: {fileID: 21300000, guid: 16987b2f2842b604d88b238202dd0314, type: 3}
     name: The bud 2
     scoreRequirement: 100
+    color: {r: 0.4274297, g: 0.5566038, b: 0.480619, a: 1}
+    runeStats:
+      goldPerClickIncease: 2
+      goldPeSecIncease: 0
+      boostAdjacentAll: 0
   - level: 3
     sprite: {fileID: 21300000, guid: fec27010c1709fc4c8a359fc83bf4aec, type: 3}
     name: The bud 3
     scoreRequirement: 1000
+    color: {r: 0, g: 0, b: 0, a: 0}
+    runeStats:
+      goldPerClickIncease: 0
+      goldPeSecIncease: 0
+      boostAdjacentAll: 0
   - level: 4
     sprite: {fileID: 21300000, guid: 428c5237f6eb1164f9bf70100eaa748a, type: 3}
     name: The bud 4
     scoreRequirement: 5000
+    color: {r: 0, g: 0, b: 0, a: 0}
+    runeStats:
+      goldPerClickIncease: 0
+      goldPeSecIncease: 0
+      boostAdjacentAll: 0
   - level: 5
     sprite: {fileID: 21300000, guid: 6bafc229ab1b41c4b91a1cf2f93462ab, type: 3}
     name: The bud 5
     scoreRequirement: 10000
+    color: {r: 0, g: 0, b: 0, a: 0}
+    runeStats:
+      goldPerClickIncease: 0
+      goldPeSecIncease: 0
+      boostAdjacentAll: 0
   - level: 6
     sprite: {fileID: 21300000, guid: 9f180ca376eb26a49a7f6a9e1557984d, type: 3}
     name: The bud 6
     scoreRequirement: 50000
+    color: {r: 0, g: 0, b: 0, a: 0}
+    runeStats:
+      goldPerClickIncease: 0
+      goldPeSecIncease: 0
+      boostAdjacentAll: 0

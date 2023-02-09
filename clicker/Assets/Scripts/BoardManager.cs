@@ -11,23 +11,25 @@ public class BoardManager : MonoBehaviour
 
     [SerializeField]
     private Vector2 tempAnchorPoint;
+
     private float gridSpace = 0.677f;
     private float bottomOffsetSpace = 0.12f;
 
     [SerializeField]
     private Levels levelsHandler;
 
-    // private SingleLevel currenLevel;
+    private int size = 9;
 
-    private int size;
+    public int goldPerClick = 0;
 
     private void Start()
     {
-        size = 9;
-
         // Don't have save file
         board = this.generateBoard();
-        this.initFirstCenterCell();
+
+        // Initlize the first cell
+        BoardCell centerCell = board[(int)size / 2][(int)size / 2];
+        centerCell.changeLevel(levelsHandler.levels[0]);
     }
 
     private List<List<BoardCell>> generateBoard()
@@ -43,7 +45,8 @@ public class BoardManager : MonoBehaviour
                 GameObject cellGameObject = Instantiate(
                     boardCellPrefab,
                     cellSpawnPostion,
-                    Quaternion.identity
+                    Quaternion.identity,
+                    this.transform
                 );
                 BoardCell cell = cellGameObject.GetComponent(typeof(BoardCell)) as BoardCell;
                 emptyRow.Add(cell);
@@ -77,18 +80,58 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+    public void resyncGoldPerClick()
+    {
+        int newGoldPerClick = 0;
+
+        foreach (CellWithPosition cellPosition in getAllCells())
+        {
+            if (!cellPosition.cell.isAlive)
+            {
+                continue;
+            }
+            newGoldPerClick = newGoldPerClick + cellPosition.cell.runeStats.goldPerClickIncease;
+        }
+        goldPerClick = newGoldPerClick;
+    }
+
+    public void enterBuildPrep()
+    {
+        foreach (CellWithPosition cellPosition in getAllCells())
+        {
+            cellPosition.cell.enterBuildPrep();
+        }
+    }
+
+    public void exitBuildPrep()
+    {
+        foreach (CellWithPosition cellPosition in getAllCells())
+        {
+            cellPosition.cell.exitBuildPrep();
+        }
+    }
+
+    public IEnumerable<CellWithPosition> getAllCells()
+    {
+        for (int columnIndex = 0; columnIndex < board.Count; columnIndex++)
+        {
+            for (int rowIndex = 0; rowIndex < board[columnIndex].Count; rowIndex++)
+            {
+                yield return new CellWithPosition(
+                    board[columnIndex][rowIndex],
+                    columnIndex,
+                    rowIndex
+                );
+            }
+        }
+    }
+
     private void Awake()
     {
         if (SceneManagerManager.current != null)
         {
             SceneManagerManager.current.mainGameLocalManagers.boardManager = this;
         }
-    }
-
-    private void initFirstCenterCell()
-    {
-        BoardCell centerCell = board[(int)size / 2][(int)size / 2];
-        centerCell.init(levelsHandler.levels[0]);
     }
 
     private void OnDestroy()

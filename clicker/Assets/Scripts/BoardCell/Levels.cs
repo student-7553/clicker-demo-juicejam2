@@ -7,7 +7,17 @@ public struct SingleLevel
     public int level;
     public Sprite sprite;
     public string name;
-    public int scoreRequirement;
+    public int goldRequirement;
+    public Color color;
+    public BoardCellRuneStats runeStats;
+};
+
+public class SingleClassLevel
+{
+    public int level;
+    public Sprite sprite;
+    public string name;
+    public int goldRequirement;
     public Color color;
     public BoardCellRuneStats runeStats;
 };
@@ -20,5 +30,23 @@ public struct SingleLevel
 public class Levels : ScriptableObject
 {
     [SerializeField]
-    public List<SingleLevel> levels;
+    private List<SingleLevel> levels;
+
+    public List<SingleClassLevel> trueLevels;
+
+    void OnEnable()
+    {
+        trueLevels = new List<SingleClassLevel>();
+        foreach (SingleLevel level in levels)
+        {
+            SingleClassLevel classLevel = new SingleClassLevel();
+            classLevel.level = level.level;
+            classLevel.sprite = level.sprite;
+            classLevel.name = level.name;
+            classLevel.goldRequirement = level.goldRequirement;
+            classLevel.color = level.color;
+            classLevel.runeStats = level.runeStats;
+            trueLevels.Add(classLevel);
+        }
+    }
 }

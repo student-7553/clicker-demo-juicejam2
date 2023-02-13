@@ -51,26 +51,62 @@ public class PlayerInfo : MonoBehaviour
         Vector3 mousePosition = Mouse.current.position.ReadValue();
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
         RaycastHit2D hit = Physics2D.GetRayIntersection(ray, 40, clickableLayerMask);
+
         if (hit.collider == null)
         {
             return;
         }
 
+        BoardManager boardManager = SceneManagerManager.current.getBoardManager();
+
+        bool isCell = hit.collider.gameObject.CompareTag("Cell");
+        if (!isCell)
+        {
+            return;
+        }
+
+        if (boardManager.buildPrep)
+        {
+            this.handleBuildPrepClick(hit.collider.gameObject);
+            return;
+        }
+
+        this.handleClick(hit.collider.gameObject);
+    }
+
+    private void handleBuildPrepClick(GameObject cellGameObject)
+    {
+        BoardCell boardCell = cellGameObject.GetComponent(typeof(BoardCell)) as BoardCell;
+        if (boardCell == null || boardCell.isAlive)
+        {
+            return;
+        }
+
+        BoardManager boardManager = SceneManagerManager.current.getBoardManager();
+        SingleClassLevel level = boardManager.buildLevel;
+        boardCell.initToLevel(level);
+        boardManager.exitBuildPrep();
+        playerStats.totalGold = playerStats.totalGold - level.goldRequirement;
+    }
+
+    private void handleClick(GameObject cellGameObject)
+    {
+        BoardCell boardCell = cellGameObject.GetComponent(typeof(BoardCell)) as BoardCell;
+        if (boardCell == null || !boardCell.isAlive)
+        {
+            return;
+        }
         this.handleTick();
     }
 
     public void handleTick()
     {
-        if (
-            !SceneManagerManager.current
-            || !SceneManagerManager.current.mainGameLocalManagers.boardManager
-        )
+        if (!SceneManagerManager.current)
         {
             return;
         }
 
         playerStats.totalGold =
-            playerStats.totalGold
-            + SceneManagerManager.current.mainGameLocalManagers.boardManager.goldPerClick;
+            playerStats.totalGold + SceneManagerManager.current.getBoardManager().goldPerClick;
     }
 }

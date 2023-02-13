@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 426392156911509310}
   m_Layer: 6
   m_Name: BoardCell
-  m_TagString: Untagged
+  m_TagString: Cell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

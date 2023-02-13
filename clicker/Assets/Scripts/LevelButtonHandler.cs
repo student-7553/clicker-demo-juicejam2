@@ -1,19 +1,26 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class LevelButtonHandler : MonoBehaviour
 {
-    private SingleLevel level;
+    private SingleClassLevel level;
+    private Action<SingleClassLevel> onlevelClick;
 
     public void OnClick()
     {
-        // Todo:
+        if (level == null)
+        {
+            return;
+        }
+        onlevelClick.Invoke(level);
     }
 
-    public void initlize(SingleLevel _level)
+    public void initlize(SingleClassLevel _level, Action<SingleClassLevel> _onLevelClick)
     {
         level = _level;
+        onlevelClick = _onLevelClick;
         TextMeshProUGUI buttonText =
             gameObject.GetComponentInChildren(typeof(TextMeshProUGUI)) as TextMeshProUGUI;
         buttonText.text = level.name;
@@ -26,12 +33,12 @@ public class LevelButtonHandler : MonoBehaviour
 
     private void handleGoldCompute()
     {
-        if (level.level == 0 || PlayerInfo.current == null)
+        if (level == null || PlayerInfo.current == null)
         {
             return;
         }
 
-        if (PlayerInfo.current.playerStats.totalGold > level.scoreRequirement)
+        if (PlayerInfo.current.playerStats.totalGold >= level.goldRequirement)
         {
             Button buttonObject = GetComponent(typeof(Button)) as Button;
             buttonObject.interactable = true;

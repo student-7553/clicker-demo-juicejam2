@@ -22,4 +22,9 @@ public class SceneManagerManager : MonoBehaviour
         current = this;
         mainGameLocalManagers = new MainGameLocalManagers();
     }
+
+    public BoardManager getBoardManager()
+    {
+        return mainGameLocalManagers.boardManager;
+    }
 }

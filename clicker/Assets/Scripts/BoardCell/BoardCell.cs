@@ -20,35 +20,39 @@ public class BoardCell : MonoBehaviour
 
     private BoardManager parentBoardManager;
 
-    private bool buildPrep = true;
-
     // **************** MIDDLEWARE ******************
 
     public bool isAlive
     {
         get { return _isAlive; }
-        set
-        {
-            _isAlive = value;
-            if (polygonCollider != null)
-            {
-                polygonCollider.enabled = _isAlive;
-            }
-        }
+        set { _isAlive = value; }
     }
 
     private void OnMouseEnter()
     {
-        if (buildPrep || !isAlive)
+        if (!isAlive && getBoardManager().buildPrep)
+        {
+            boardCellSpriteHandler.onHover();
+            return;
+        }
+
+        if (!isAlive || getBoardManager().buildPrep)
         {
             return;
         }
+
         boardCellSpriteHandler.onHover();
     }
 
     private void OnMouseExit()
     {
-        if (buildPrep || !isAlive)
+        if (!isAlive && getBoardManager().buildPrep)
+        {
+            boardCellSpriteHandler.onHover(true);
+            return;
+        }
+
+        if (!isAlive || getBoardManager().buildPrep)
         {
             return;
         }
@@ -57,64 +61,12 @@ public class BoardCell : MonoBehaviour
 
     public void enterBuildPrep()
     {
-        if (!buildPrep)
-        {
-            return;
-        }
-        buildPrep = true;
-        if (isAlive)
-        {
-            boardCellSpriteHandler.runeSpriteRenderer.color = new Color(
-                boardCellSpriteHandler.runeSpriteRenderer.color.r,
-                boardCellSpriteHandler.runeSpriteRenderer.color.g,
-                boardCellSpriteHandler.runeSpriteRenderer.color.b,
-                boardCellSpriteHandler.deadOpacity
-            );
-            boardCellSpriteHandler.borderSpriteRenderer.color = new Color(
-                boardCellSpriteHandler.borderSpriteRenderer.color.r,
-                boardCellSpriteHandler.borderSpriteRenderer.color.g,
-                boardCellSpriteHandler.borderSpriteRenderer.color.b,
-                boardCellSpriteHandler.deadOpacity
-            );
-            return;
-        }
-        boardCellSpriteHandler.borderSpriteRenderer.color = new Color(
-            boardCellSpriteHandler.borderSpriteRenderer.color.r,
-            boardCellSpriteHandler.borderSpriteRenderer.color.g,
-            boardCellSpriteHandler.borderSpriteRenderer.color.b,
-            boardCellSpriteHandler.hoverBorderOpacity
-        );
+        boardCellSpriteHandler.handlePrep(isAlive);
     }
 
     public void exitBuildPrep()
     {
-        if (buildPrep)
-        {
-            return;
-        }
-        buildPrep = false;
-        if (isAlive)
-        {
-            boardCellSpriteHandler.runeSpriteRenderer.color = new Color(
-                boardCellSpriteHandler.runeSpriteRenderer.color.r,
-                boardCellSpriteHandler.runeSpriteRenderer.color.g,
-                boardCellSpriteHandler.runeSpriteRenderer.color.b,
-                1f
-            );
-            boardCellSpriteHandler.borderSpriteRenderer.color = new Color(
-                boardCellSpriteHandler.borderSpriteRenderer.color.r,
-                boardCellSpriteHandler.borderSpriteRenderer.color.g,
-                boardCellSpriteHandler.borderSpriteRenderer.color.b,
-                boardCellSpriteHandler.defaultOpacity
-            );
-            return;
-        }
-        boardCellSpriteHandler.borderSpriteRenderer.color = new Color(
-            boardCellSpriteHandler.borderSpriteRenderer.color.r,
-            boardCellSpriteHandler.borderSpriteRenderer.color.g,
-            boardCellSpriteHandler.borderSpriteRenderer.color.b,
-            boardCellSpriteHandler.deadOpacity
-        );
+        boardCellSpriteHandler.handlePrep(isAlive, true);
     }
 
     private void Awake()
@@ -128,18 +80,20 @@ public class BoardCell : MonoBehaviour
 
         polygonCollider = gameObject.GetComponent(typeof(PolygonCollider2D)) as PolygonCollider2D;
 
+        polygonCollider.enabled = true;
+
         boardCellSpriteHandler = new BoardCellSpriteHandler(
             runeSpriteRenderer,
-            borderSpriteRenderer,
-            levelsHandler
+            borderSpriteRenderer
         );
     }
 
-    public void changeLevel(SingleLevel level)
+    public void initToLevel(SingleClassLevel level)
     {
         isAlive = true;
         runeStats = level.runeStats;
-        this.boardCellSpriteHandler.handleLevel(level);
+
+        this.boardCellSpriteHandler.changeLevel(level);
         this.getBoardManager().resyncGoldPerClick();
     }
 

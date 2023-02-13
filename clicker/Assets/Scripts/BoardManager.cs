@@ -22,6 +22,9 @@ public class BoardManager : MonoBehaviour
 
     public int goldPerClick = 0;
 
+    public bool buildPrep = false;
+    public SingleClassLevel buildLevel;
+
     private void Start()
     {
         // Don't have save file
@@ -29,7 +32,7 @@ public class BoardManager : MonoBehaviour
 
         // Initlize the first cell
         BoardCell centerCell = board[(int)size / 2][(int)size / 2];
-        centerCell.changeLevel(levelsHandler.levels[0]);
+        centerCell.initToLevel(levelsHandler.trueLevels[0]);
     }
 
     private List<List<BoardCell>> generateBoard()
@@ -95,8 +98,14 @@ public class BoardManager : MonoBehaviour
         goldPerClick = newGoldPerClick;
     }
 
-    public void enterBuildPrep()
+    public void enterBuildPrep(SingleClassLevel prepLevel)
     {
+        if (this.buildPrep == true)
+        {
+            return;
+        }
+        this.buildPrep = true;
+        this.buildLevel = prepLevel;
         foreach (CellWithPosition cellPosition in getAllCells())
         {
             cellPosition.cell.enterBuildPrep();
@@ -105,6 +114,12 @@ public class BoardManager : MonoBehaviour
 
     public void exitBuildPrep()
     {
+        if (this.buildPrep == false)
+        {
+            return;
+        }
+        this.buildPrep = false;
+        this.buildLevel = null;
         foreach (CellWithPosition cellPosition in getAllCells())
         {
             cellPosition.cell.exitBuildPrep();

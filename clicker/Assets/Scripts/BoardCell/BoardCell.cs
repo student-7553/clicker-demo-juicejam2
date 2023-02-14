@@ -69,6 +69,11 @@ public class BoardCell : MonoBehaviour
         boardCellSpriteHandler.handlePrep(isAlive, true);
     }
 
+    public void changeBorderColor(Color newColor)
+    {
+        boardCellSpriteHandler.changeBorderColor(newColor);
+    }
+
     private void Awake()
     {
         _isAlive = false;

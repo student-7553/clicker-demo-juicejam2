@@ -28,7 +28,6 @@ public class LevelBoardhandler : MonoBehaviour
 
             LevelButtonHandler buttonHandler =
                 buttonObject.GetComponent(typeof(LevelButtonHandler)) as LevelButtonHandler;
-            Debug.Log(level.goldRequirement);
             buttonHandler.initlize(level, onLevelClick);
 
             buttonObject.transform.localPosition = new Vector3(0, (-50 * index) - initYPosition, 0);

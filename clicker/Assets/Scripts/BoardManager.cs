@@ -22,8 +22,11 @@ public class BoardManager : MonoBehaviour
 
     public int goldPerClick = 0;
 
+    // ---------------- Build prep ----------------------
     public bool buildPrep = false;
     public SingleClassLevel buildLevel;
+
+    private Color boardBorderColor;
 
     private void Start()
     {
@@ -33,6 +36,110 @@ public class BoardManager : MonoBehaviour
         // Initlize the first cell
         BoardCell centerCell = board[(int)size / 2][(int)size / 2];
         centerCell.initToLevel(levelsHandler.trueLevels[0]);
+
+        boardBorderColor = levelsHandler.startBorderColor;
+    }
+
+    public void resyncGoldPerClick()
+    {
+        int newGoldPerClick = 0;
+
+        foreach (CellWithPosition cellPosition in getAllCells())
+        {
+            if (!cellPosition.cell.isAlive)
+            {
+                continue;
+            }
+            newGoldPerClick = newGoldPerClick + cellPosition.cell.runeStats.goldPerClickIncease;
+        }
+        goldPerClick = newGoldPerClick;
+    }
+
+    public void enterBuildPrep(SingleClassLevel prepLevel)
+    {
+        if (this.buildPrep == true)
+        {
+            return;
+        }
+        this.buildPrep = true;
+        this.buildLevel = prepLevel;
+        foreach (CellWithPosition cellPosition in getAllCells())
+        {
+            cellPosition.cell.enterBuildPrep();
+        }
+    }
+
+    public void exitBuildPrep()
+    {
+        if (this.buildPrep == false)
+        {
+            return;
+        }
+        this.buildPrep = false;
+        this.buildLevel = null;
+        foreach (CellWithPosition cellPosition in getAllCells())
+        {
+            cellPosition.cell.exitBuildPrep();
+        }
+    }
+
+    public void onLevelIncrease(float newHighLevel, float maxLevels)
+    {
+        float percentage = newHighLevel / maxLevels;
+        float differnce =
+            (levelsHandler.startBorderColor.r - levelsHandler.endBorderColor.r) / percentage;
+
+        float newR =
+            levelsHandler.startBorderColor.r
+            + ((levelsHandler.endBorderColor.r - levelsHandler.startBorderColor.r) * percentage);
+        float newG =
+            levelsHandler.startBorderColor.g
+            + ((levelsHandler.endBorderColor.g - levelsHandler.startBorderColor.g) * percentage);
+        float newB =
+            levelsHandler.startBorderColor.b
+            + ((levelsHandler.endBorderColor.b - levelsHandler.startBorderColor.b) * percentage);
+        float newA =
+            levelsHandler.startBorderColor.a
+            + ((levelsHandler.endBorderColor.a - levelsHandler.startBorderColor.a) * percentage);
+
+        Color newBorderColor = new Color(newR, newG, newB, newA);
+        boardBorderColor = newBorderColor;
+
+        foreach (CellWithPosition cellPosition in getAllCells())
+        {
+            cellPosition.cell.changeBorderColor(boardBorderColor);
+        }
+    }
+
+    private void Awake()
+    {
+        if (SceneManagerManager.current != null)
+        {
+            SceneManagerManager.current.mainGameLocalManagers.boardManager = this;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (SceneManagerManager.current != null)
+        {
+            SceneManagerManager.current.mainGameLocalManagers.boardManager = null;
+        }
+    }
+
+    private IEnumerable<CellWithPosition> getAllCells()
+    {
+        for (int columnIndex = 0; columnIndex < board.Count; columnIndex++)
+        {
+            for (int rowIndex = 0; rowIndex < board[columnIndex].Count; rowIndex++)
+            {
+                yield return new CellWithPosition(
+                    board[columnIndex][rowIndex],
+                    columnIndex,
+                    rowIndex
+                );
+            }
+        }
     }
 
     private List<List<BoardCell>> generateBoard()
@@ -80,80 +187,6 @@ public class BoardManager : MonoBehaviour
                     0f
                 );
             }
-        }
-    }
-
-    public void resyncGoldPerClick()
-    {
-        int newGoldPerClick = 0;
-
-        foreach (CellWithPosition cellPosition in getAllCells())
-        {
-            if (!cellPosition.cell.isAlive)
-            {
-                continue;
-            }
-            newGoldPerClick = newGoldPerClick + cellPosition.cell.runeStats.goldPerClickIncease;
-        }
-        goldPerClick = newGoldPerClick;
-    }
-
-    public void enterBuildPrep(SingleClassLevel prepLevel)
-    {
-        if (this.buildPrep == true)
-        {
-            return;
-        }
-        this.buildPrep = true;
-        this.buildLevel = prepLevel;
-        foreach (CellWithPosition cellPosition in getAllCells())
-        {
-            cellPosition.cell.enterBuildPrep();
-        }
-    }
-
-    public void exitBuildPrep()
-    {
-        if (this.buildPrep == false)
-        {
-            return;
-        }
-        this.buildPrep = false;
-        this.buildLevel = null;
-        foreach (CellWithPosition cellPosition in getAllCells())
-        {
-            cellPosition.cell.exitBuildPrep();
-        }
-    }
-
-    public IEnumerable<CellWithPosition> getAllCells()
-    {
-        for (int columnIndex = 0; columnIndex < board.Count; columnIndex++)
-        {
-            for (int rowIndex = 0; rowIndex < board[columnIndex].Count; rowIndex++)
-            {
-                yield return new CellWithPosition(
-                    board[columnIndex][rowIndex],
-                    columnIndex,
-                    rowIndex
-                );
-            }
-        }
-    }
-
-    private void Awake()
-    {
-        if (SceneManagerManager.current != null)
-        {
-            SceneManagerManager.current.mainGameLocalManagers.boardManager = this;
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (SceneManagerManager.current != null)
-        {
-            SceneManagerManager.current.mainGameLocalManagers.boardManager = null;
         }
     }
 }

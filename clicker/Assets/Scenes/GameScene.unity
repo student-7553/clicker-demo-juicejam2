@@ -171,6 +171,7 @@ MonoBehaviour:
   tempAnchorPoint: {x: -4.5, y: -1.75}
   levelsHandler: {fileID: 11400000, guid: 24f19ddf519c81d459752cb6f351a571, type: 2}
   goldPerClick: 0
+  buildPrep: 0
 --- !u!1 &419151630
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,7 +254,7 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1.0000304
+    width: 0.99990964
     height: 1
   near clip plane: 0.3
   far clip plane: 100
@@ -792,7 +793,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1346919294}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.62125
+  m_Size: 0.6275
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1068,6 +1069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9862b3136ccfad4e8c7f6952d38b461, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelHandler: {fileID: 11400000, guid: 24f19ddf519c81d459752cb6f351a571, type: 2}
 --- !u!114 &1420513478
 MonoBehaviour:
   m_ObjectHideFlags: 0

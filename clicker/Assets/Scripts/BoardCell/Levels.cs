@@ -34,6 +34,10 @@ public class Levels : ScriptableObject
 
     public List<SingleClassLevel> trueLevels;
 
+    public Color startBorderColor;
+
+    public Color endBorderColor;
+
     void OnEnable()
     {
         trueLevels = new List<SingleClassLevel>();

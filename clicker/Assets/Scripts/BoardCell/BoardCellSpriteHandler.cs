@@ -105,4 +105,14 @@ public class BoardCellSpriteHandler
             }
         }
     }
+
+    public void changeBorderColor(Color newBorderColor)
+    {
+        this.borderSpriteRenderer.color = new Color(
+            newBorderColor.r,
+            newBorderColor.g,
+            newBorderColor.b,
+            defaultBorderOpacity
+        );
+    }
 }

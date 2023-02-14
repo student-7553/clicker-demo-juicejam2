@@ -29,6 +29,27 @@ public class PlayerInfo : MonoBehaviour
 
     private LayerMask clickableLayerMask;
 
+    [SerializeField]
+    private Levels levelHandler;
+
+    private int maxLevels;
+    private int _currentLevel;
+    public int currentLevel
+    {
+        get { return _currentLevel; }
+        set
+        {
+            _currentLevel = value;
+
+            if (maxLevels != 0)
+            {
+                SceneManagerManager.current
+                    .getBoardManager()
+                    ?.onLevelIncrease(_currentLevel, maxLevels);
+            }
+        }
+    }
+
     private void Awake()
     {
         if (current != null)
@@ -40,14 +61,22 @@ public class PlayerInfo : MonoBehaviour
         clickableLayerMask = LayerMask.GetMask("Clickable");
     }
 
-    // Start is called before the first frame update
     void Start()
     {
+        this.currentLevel = 0;
+        this.maxLevels = this.levelHandler.trueLevels.Count;
+
         playerStats = new PlayerStats();
     }
 
     public void handlePlayerClick()
     {
+        BoardManager boardManager = SceneManagerManager.current.getBoardManager();
+        if (boardManager == null)
+        {
+            return;
+        }
+
         Vector3 mousePosition = Mouse.current.position.ReadValue();
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
         RaycastHit2D hit = Physics2D.GetRayIntersection(ray, 40, clickableLayerMask);
@@ -56,8 +85,6 @@ public class PlayerInfo : MonoBehaviour
         {
             return;
         }
-
-        BoardManager boardManager = SceneManagerManager.current.getBoardManager();
 
         bool isCell = hit.collider.gameObject.CompareTag("Cell");
         if (!isCell)
@@ -84,6 +111,11 @@ public class PlayerInfo : MonoBehaviour
 
         BoardManager boardManager = SceneManagerManager.current.getBoardManager();
         SingleClassLevel level = boardManager.buildLevel;
+        if (level.level > this.currentLevel)
+        {
+            Debug.Log("level/" + level.level);
+            this.currentLevel = level.level;
+        }
         boardCell.initToLevel(level);
         boardManager.exitBuildPrep();
         playerStats.totalGold = playerStats.totalGold - level.goldRequirement;
@@ -101,12 +133,12 @@ public class PlayerInfo : MonoBehaviour
 
     public void handleTick()
     {
-        if (!SceneManagerManager.current)
+        BoardManager boardManager = SceneManagerManager.current.getBoardManager();
+        if (boardManager == null)
         {
             return;
         }
 
-        playerStats.totalGold =
-            playerStats.totalGold + SceneManagerManager.current.getBoardManager().goldPerClick;
+        playerStats.totalGold = playerStats.totalGold + boardManager.goldPerClick;
     }
 }

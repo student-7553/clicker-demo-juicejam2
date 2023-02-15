@@ -16,3 +16,4 @@ MonoBehaviour:
   gridSpace: 0.677
   bottomOffsetSpace: 0.12
   size: 9
+  blockIncrease: 5

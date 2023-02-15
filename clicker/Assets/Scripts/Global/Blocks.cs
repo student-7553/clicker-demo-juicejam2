@@ -7,8 +7,7 @@ public struct StructBlock
     public int level;
     public Sprite sprite;
     public string name;
-
-    // public int goldRequirement;
+    public int goldRequirement;
     public Color color;
     public BoardCellRuneStats runeStats;
     public int charge;
@@ -19,8 +18,7 @@ public class ClassBlock
     public int level;
     public Sprite sprite;
     public string name;
-
-    // public int goldRequirement;
+    public int goldRequirement;
     public Color color;
     public BoardCellRuneStats runeStats;
     public int charge;
@@ -55,6 +53,7 @@ public class Blocks : ScriptableObject
             classBlock.color = block.color;
             classBlock.runeStats = block.runeStats;
             classBlock.charge = block.charge;
+            classBlock.goldRequirement = block.goldRequirement;
             blocks.Add(classBlock);
         }
     }

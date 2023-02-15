@@ -22,11 +22,11 @@ public class BoardManager : MonoBehaviour
             this.handleBlockCountBorder(_blockCount);
 
             // Connect this with the actuall price on
-            this.nextBlockPrice = (_blockCount + 1) * variables.blockIncrease;
+            this.nextBlockPriceIncrease = _blockCount * variables.blockIncrease;
         }
     }
 
-    public int nextBlockPrice;
+    public int nextBlockPriceIncrease;
 
     // ---------------- Build prep ----------------------
 
@@ -57,7 +57,7 @@ public class BoardManager : MonoBehaviour
         // Don't have save file
         board = this.generateBoard();
 
-        this.nextBlockPrice = variables.blockIncrease * 1;
+        this.nextBlockPriceIncrease = 0;
 
         // Initlize the first cell
         BoardCell centerCell = board[(int)variables.size / 2][(int)variables.size / 2];
@@ -111,7 +111,7 @@ public class BoardManager : MonoBehaviour
 
     private void handleBlockCountBorder(float newBlockCount)
     {
-        float maxLevels = 100f;
+        float maxLevels = 8f;
         float percentage = newBlockCount / maxLevels;
 
         float differnce =

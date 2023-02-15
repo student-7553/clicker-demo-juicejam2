@@ -76,7 +76,8 @@ public class MainGamePlayerManager : MonoBehaviour
         this.boardManager.exitBuildPrep();
 
         PlayerInfo.current.playerStats.totalGold =
-            PlayerInfo.current.playerStats.totalGold - this.boardManager.nextBlockPrice;
+            PlayerInfo.current.playerStats.totalGold
+            - (level.goldRequirement + this.boardManager.nextBlockPriceIncrease);
 
         this.boardManager.blockCount = this.boardManager.blockCount + 1;
         level.charge = level.charge - 1;

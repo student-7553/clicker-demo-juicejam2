@@ -6,11 +6,11 @@ public class MainGameLocalManagers
 }
 
 [DefaultExecutionOrder(-10)]
-public class SceneManagerManager : MonoBehaviour
+public class IdkManager : MonoBehaviour
 {
-    public static SceneManagerManager current;
+    public static IdkManager current;
 
-    public MainGameLocalManagers mainGameLocalManagers;
+    private MainGameLocalManagers mainGameLocalManagers;
 
     private void Awake()
     {
@@ -26,5 +26,15 @@ public class SceneManagerManager : MonoBehaviour
     public BoardManager getBoardManager()
     {
         return mainGameLocalManagers.boardManager;
+    }
+
+    public void registerBoardManager(BoardManager manager)
+    {
+        mainGameLocalManagers.boardManager = manager;
+    }
+
+    public void clearBoardManager()
+    {
+        mainGameLocalManagers.boardManager = null;
     }
 }

@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// using TMPro;
-// using UnityEngine.UI;
-
 public class LevelBoardhandler : MonoBehaviour
 {
+    private BoardManager boardManager;
+
     [SerializeField]
-    private Levels levelsHandler;
+    private Blocks blocksHandler;
 
     [SerializeField]
     private GameObject buttonPrefab;
@@ -19,8 +18,15 @@ public class LevelBoardhandler : MonoBehaviour
 
     void Start()
     {
+        if (IdkManager.current == null)
+        {
+            throw new System.Exception("IdkManager is not inilized");
+        }
+
+        this.boardManager = IdkManager.current.getBoardManager();
+
         int index = 0;
-        foreach (SingleClassLevel level in levelsHandler.trueLevels)
+        foreach (ClassBlock level in blocksHandler.blocks)
         {
             index++;
             GameObject buttonObject = Instantiate(buttonPrefab, this.transform);
@@ -34,19 +40,8 @@ public class LevelBoardhandler : MonoBehaviour
         }
     }
 
-    public void onLevelClick(SingleClassLevel level)
+    public void onLevelClick(ClassBlock level)
     {
-        BoardManager boardManager = SceneManagerManager.current.getBoardManager();
-        boardManager.enterBuildPrep(level);
-    }
-
-    private void Awake()
-    {
-        if (SceneManagerManager.current == null)
-        {
-            return;
-        }
-
-        // boardManager = SceneManagerManager.current.mainGameLocalManagers.boardManager;
+        this.boardManager.enterBuildPrep(level);
     }
 }

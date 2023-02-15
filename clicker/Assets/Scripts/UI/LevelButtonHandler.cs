@@ -5,8 +5,9 @@ using System;
 
 public class LevelButtonHandler : MonoBehaviour
 {
-    private SingleClassLevel level;
-    private Action<SingleClassLevel> onlevelClick;
+    private ClassBlock level;
+    private Action<ClassBlock> onlevelClick;
+    private BoardManager boardManager;
 
     public void OnClick()
     {
@@ -17,12 +18,17 @@ public class LevelButtonHandler : MonoBehaviour
         onlevelClick.Invoke(level);
     }
 
-    public void initlize(SingleClassLevel _level, Action<SingleClassLevel> _onLevelClick)
+    public void initlize(ClassBlock _level, Action<ClassBlock> _onLevelClick)
     {
         level = _level;
         onlevelClick = _onLevelClick;
         TextMeshProUGUI buttonText =
             gameObject.GetComponentInChildren(typeof(TextMeshProUGUI)) as TextMeshProUGUI;
+        this.boardManager = IdkManager.current.getBoardManager();
+        if (boardManager == null)
+        {
+            throw new Exception("boardManager is null");
+        }
         buttonText.text = level.name;
     }
 
@@ -37,8 +43,7 @@ public class LevelButtonHandler : MonoBehaviour
         {
             return;
         }
-
-        if (PlayerInfo.current.playerStats.totalGold >= level.goldRequirement)
+        if (PlayerInfo.current.playerStats.totalGold >= this.boardManager.nextBlockPrice)
         {
             Button buttonObject = GetComponent(typeof(Button)) as Button;
             buttonObject.interactable = true;

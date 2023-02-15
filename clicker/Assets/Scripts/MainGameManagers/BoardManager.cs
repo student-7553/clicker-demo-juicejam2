@@ -1,43 +1,69 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BoardManager : MonoBehaviour
 {
+    // ---------------- MAIN VAR ----------------------
     private List<List<BoardCell>> board;
 
+    [System.NonSerialized]
+    public int goldPerClick = 0;
+
+    private Color boardBorderColor;
+
+    [SerializeField]
+    private int _blockCount;
+    public int blockCount
+    {
+        get { return _blockCount; }
+        set
+        {
+            _blockCount = value;
+            this.handleBlockCountBorder(_blockCount);
+
+            // Connect this with the actuall price on
+            this.nextBlockPrice = (_blockCount + 1) * variables.blockIncrease;
+        }
+    }
+
+    public int nextBlockPrice;
+
+    // ---------------- Build prep ----------------------
+
+    [System.NonSerialized]
+    public bool buildPrep = false;
+    public int buildLevel;
+
+    // ---------------- OUTSIDE  ----------------------
     [SerializeField]
     private GameObject boardCellPrefab;
 
     [SerializeField]
-    private Vector2 tempAnchorPoint;
-
-    private float gridSpace = 0.677f;
-    private float bottomOffsetSpace = 0.12f;
+    private Blocks blocksHandler;
 
     [SerializeField]
-    private Levels levelsHandler;
+    private Variables variables;
 
-    private int size = 9;
-
-    public int goldPerClick = 0;
-
-    // ---------------- Build prep ----------------------
-    public bool buildPrep = false;
-    public SingleClassLevel buildLevel;
-
-    private Color boardBorderColor;
+    private void Awake()
+    {
+        if (IdkManager.current != null)
+        {
+            IdkManager.current.registerBoardManager(this);
+        }
+    }
 
     private void Start()
     {
         // Don't have save file
         board = this.generateBoard();
 
-        // Initlize the first cell
-        BoardCell centerCell = board[(int)size / 2][(int)size / 2];
-        centerCell.initToLevel(levelsHandler.trueLevels[0]);
+        this.nextBlockPrice = variables.blockIncrease * 1;
 
-        boardBorderColor = levelsHandler.startBorderColor;
+        // Initlize the first cell
+        BoardCell centerCell = board[(int)variables.size / 2][(int)variables.size / 2];
+        centerCell.initToLevel(blocksHandler.blocks[0]);
+
+        boardBorderColor = blocksHandler.startBorderColor;
     }
 
     public void resyncGoldPerClick()
@@ -55,14 +81,14 @@ public class BoardManager : MonoBehaviour
         goldPerClick = newGoldPerClick;
     }
 
-    public void enterBuildPrep(SingleClassLevel prepLevel)
+    public void enterBuildPrep(ClassBlock prepLevel)
     {
         if (this.buildPrep == true)
         {
             return;
         }
         this.buildPrep = true;
-        this.buildLevel = prepLevel;
+        this.buildLevel = prepLevel.level;
         foreach (CellWithPosition cellPosition in getAllCells())
         {
             cellPosition.cell.enterBuildPrep();
@@ -76,31 +102,33 @@ public class BoardManager : MonoBehaviour
             return;
         }
         this.buildPrep = false;
-        this.buildLevel = null;
+        this.buildLevel = 0;
         foreach (CellWithPosition cellPosition in getAllCells())
         {
             cellPosition.cell.exitBuildPrep();
         }
     }
 
-    public void onLevelIncrease(float newHighLevel, float maxLevels)
+    private void handleBlockCountBorder(float newBlockCount)
     {
-        float percentage = newHighLevel / maxLevels;
+        float maxLevels = 100f;
+        float percentage = newBlockCount / maxLevels;
+
         float differnce =
-            (levelsHandler.startBorderColor.r - levelsHandler.endBorderColor.r) / percentage;
+            (blocksHandler.startBorderColor.r - blocksHandler.endBorderColor.r) / percentage;
 
         float newR =
-            levelsHandler.startBorderColor.r
-            + ((levelsHandler.endBorderColor.r - levelsHandler.startBorderColor.r) * percentage);
+            blocksHandler.startBorderColor.r
+            + ((blocksHandler.endBorderColor.r - blocksHandler.startBorderColor.r) * percentage);
         float newG =
-            levelsHandler.startBorderColor.g
-            + ((levelsHandler.endBorderColor.g - levelsHandler.startBorderColor.g) * percentage);
+            blocksHandler.startBorderColor.g
+            + ((blocksHandler.endBorderColor.g - blocksHandler.startBorderColor.g) * percentage);
         float newB =
-            levelsHandler.startBorderColor.b
-            + ((levelsHandler.endBorderColor.b - levelsHandler.startBorderColor.b) * percentage);
+            blocksHandler.startBorderColor.b
+            + ((blocksHandler.endBorderColor.b - blocksHandler.startBorderColor.b) * percentage);
         float newA =
-            levelsHandler.startBorderColor.a
-            + ((levelsHandler.endBorderColor.a - levelsHandler.startBorderColor.a) * percentage);
+            blocksHandler.startBorderColor.a
+            + ((blocksHandler.endBorderColor.a - blocksHandler.startBorderColor.a) * percentage);
 
         Color newBorderColor = new Color(newR, newG, newB, newA);
         boardBorderColor = newBorderColor;
@@ -111,19 +139,11 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        if (SceneManagerManager.current != null)
-        {
-            SceneManagerManager.current.mainGameLocalManagers.boardManager = this;
-        }
-    }
-
     private void OnDestroy()
     {
-        if (SceneManagerManager.current != null)
+        if (IdkManager.current != null)
         {
-            SceneManagerManager.current.mainGameLocalManagers.boardManager = null;
+            IdkManager.current.clearBoardManager();
         }
     }
 
@@ -145,10 +165,10 @@ public class BoardManager : MonoBehaviour
     private List<List<BoardCell>> generateBoard()
     {
         List<List<BoardCell>> emptyBoard = new List<List<BoardCell>>();
-        for (int columnIndex = 0; columnIndex < size; columnIndex++)
+        for (int columnIndex = 0; columnIndex < variables.size; columnIndex++)
         {
             List<BoardCell> emptyRow = new List<BoardCell>();
-            for (int rowIndex = 0; rowIndex < size; rowIndex++)
+            for (int rowIndex = 0; rowIndex < variables.size; rowIndex++)
             {
                 Vector3 cellSpawnPostion = getCellPosition(rowIndex, columnIndex);
 
@@ -170,20 +190,22 @@ public class BoardManager : MonoBehaviour
             if (columnIndex % 2 == 0)
             {
                 return new Vector3(
-                    tempAnchorPoint.x + (gridSpace * rowIndex),
-                    tempAnchorPoint.y
-                        + (gridSpace * columnIndex)
-                        - (bottomOffsetSpace * columnIndex),
+                    variables.tempAnchorPoint.x + (variables.gridSpace * rowIndex),
+                    variables.tempAnchorPoint.y
+                        + (variables.gridSpace * columnIndex)
+                        - (variables.bottomOffsetSpace * columnIndex),
                     0f
                 );
             }
             else
             {
                 return new Vector3(
-                    tempAnchorPoint.x + (gridSpace * rowIndex) - (gridSpace / 2),
-                    tempAnchorPoint.y
-                        + (gridSpace * columnIndex)
-                        - (bottomOffsetSpace * columnIndex),
+                    variables.tempAnchorPoint.x
+                        + (variables.gridSpace * rowIndex)
+                        - (variables.gridSpace / 2),
+                    variables.tempAnchorPoint.y
+                        + (variables.gridSpace * columnIndex)
+                        - (variables.bottomOffsetSpace * columnIndex),
                     0f
                 );
             }

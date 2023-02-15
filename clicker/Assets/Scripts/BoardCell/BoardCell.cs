@@ -7,7 +7,7 @@ public class BoardCell : MonoBehaviour
     private bool _isAlive;
 
     [SerializeField]
-    private Levels levelsHandler;
+    private Blocks blocksHandler;
 
     [SerializeField]
     private GameObject runeGameObject;
@@ -93,12 +93,12 @@ public class BoardCell : MonoBehaviour
         );
     }
 
-    public void initToLevel(SingleClassLevel level)
+    public void initToLevel(ClassBlock level)
     {
         isAlive = true;
         runeStats = level.runeStats;
 
-        this.boardCellSpriteHandler.changeLevel(level);
+        this.boardCellSpriteHandler.changeBlock(level);
         this.getBoardManager().resyncGoldPerClick();
     }
 

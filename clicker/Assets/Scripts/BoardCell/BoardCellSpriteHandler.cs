@@ -4,7 +4,7 @@ public class BoardCellSpriteHandler
 {
     public SpriteRenderer runeSpriteRenderer;
     public SpriteRenderer borderSpriteRenderer;
-    private SingleClassLevel currentLevel;
+    private ClassBlock currentBlock;
 
     public float hoverBorderOpacity = 0.65f;
     public float defaultBorderOpacity = 0.35f;
@@ -36,11 +36,11 @@ public class BoardCellSpriteHandler
         );
     }
 
-    public void changeLevel(SingleClassLevel level)
+    public void changeBlock(ClassBlock _currentBlock)
     {
-        currentLevel = level;
-        runeSpriteRenderer.sprite = level.sprite;
-        runeSpriteRenderer.color = level.color;
+        currentBlock = _currentBlock;
+        runeSpriteRenderer.sprite = _currentBlock.sprite;
+        runeSpriteRenderer.color = _currentBlock.color;
         borderSpriteRenderer.color = new Color(
             borderSpriteRenderer.color.r,
             borderSpriteRenderer.color.g,
@@ -59,7 +59,7 @@ public class BoardCellSpriteHandler
                     runeSpriteRenderer.color.r,
                     runeSpriteRenderer.color.g,
                     runeSpriteRenderer.color.b,
-                    currentLevel == null ? 1f : currentLevel.color.a
+                    currentBlock == null ? 1f : currentBlock.color.a
                 );
                 borderSpriteRenderer.color = new Color(
                     borderSpriteRenderer.color.r,

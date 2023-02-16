@@ -46,4 +46,9 @@ public class PlayerInfo : MonoBehaviour
     {
         playerStats = new PlayerStats();
     }
+
+    private void FixedUpdate()
+    {
+        Debug.Log(playerStats.totalGold);
+    }
 }

@@ -106,7 +106,7 @@ public class BoardManager : MonoBehaviour
 
     private void handleBlockCountBorder(float newBlockCount)
     {
-        float maxLevels = 8f;
+        float maxLevels = blocksHandler.blocks.Count;
         float percentage = newBlockCount / maxLevels;
 
         float differnce =

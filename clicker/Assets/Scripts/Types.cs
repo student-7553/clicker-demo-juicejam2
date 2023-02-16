@@ -1,9 +1,23 @@
+using UnityEngine;
+
 [System.Serializable]
 public struct BoardCellRuneStats
 {
+    // Increases the gold per click
+    [Tooltip("Gold per Click")]
     public int goldPerClickIncease;
-    public int goldPeSecIncease;
-    public int boostAdjacentAll;
+
+    // If adjacent to a goldPerClickIncease increases the gold per click
+    [Tooltip("Battery power")]
+    public int batteryPower;
+
+    // Boosts all adjacent goldPerClickIncease and batteryPower
+    [Tooltip("Booter power")]
+    public int boosterPower;
+
+    // Boosts all adjacent goldPerClickIncease, batteryPower,booster
+    [Tooltip("Booter all power")]
+    public int boosterAllPower;
 }
 
 public struct CellWithPosition

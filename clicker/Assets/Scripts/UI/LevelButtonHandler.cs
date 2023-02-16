@@ -29,7 +29,7 @@ public class LevelButtonHandler : MonoBehaviour
         {
             throw new Exception("boardManager is null");
         }
-        buttonText.text = level.name;
+        buttonText.text = level.name + "/" + level.goldRequirement;
     }
 
     private void FixedUpdate()

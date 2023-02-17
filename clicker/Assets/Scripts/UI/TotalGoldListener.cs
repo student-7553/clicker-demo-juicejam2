@@ -16,7 +16,7 @@ public class TotalGoldListener : MonoBehaviour
         {
             return;
         }
-        string currentTotalGoldString = $"{PlayerInfo.current.playerStats.totalGold}";
+        string currentTotalGoldString = $"{PlayerInfo.current.totalGold}";
 
         if (currentTotalGoldString != totalScoreText.text)
         {

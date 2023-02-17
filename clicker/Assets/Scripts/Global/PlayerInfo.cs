@@ -1,30 +1,30 @@
 using UnityEngine;
 
-[DefaultExecutionOrder(10)]
-public class PlayerStats
-{
-    public int totalGold;
+// [DefaultExecutionOrder(10)]
+// public class PlayerStats
+// {
+//     public int totalGold;
 
-    public int goldPerSecond;
+//     public int goldPerSecond;
 
-    public PlayerStats(int _totalGold, int _goldPerClick, int _goldPerSecond)
-    {
-        totalGold = _totalGold;
-        goldPerSecond = _goldPerSecond;
-    }
+//     public PlayerStats(int _totalGold, int _goldPerClick, int _goldPerSecond)
+//     {
+//         totalGold = _totalGold;
+//         goldPerSecond = _goldPerSecond;
+//     }
 
-    public PlayerStats()
-    {
-        totalGold = 0;
-        goldPerSecond = 0;
-    }
-}
+//     public PlayerStats()
+//     {
+//         totalGold = 0;
+//         goldPerSecond = 0;
+//     }
+// }
 
 public class PlayerInfo : MonoBehaviour
 {
     public static PlayerInfo current;
 
-    public PlayerStats playerStats;
+    public int totalGold;
 
     private LayerMask clickableLayerMask;
 
@@ -44,11 +44,11 @@ public class PlayerInfo : MonoBehaviour
 
     void Start()
     {
-        playerStats = new PlayerStats();
+        totalGold = 0;
     }
 
-    private void FixedUpdate()
-    {
-        Debug.Log(playerStats.totalGold);
-    }
+    // private void FixedUpdate()
+    // {
+    //     Debug.Log(playerStats.totalGold);
+    // }
 }

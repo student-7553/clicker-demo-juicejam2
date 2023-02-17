@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MainGamePlayerManager : MonoBehaviour
+public class BoardPlayerManager : MonoBehaviour
 {
     private List<List<BoardCell>> board;
 
@@ -75,8 +75,7 @@ public class MainGamePlayerManager : MonoBehaviour
 
         this.boardManager.exitBuildPrep();
 
-        PlayerInfo.current.playerStats.totalGold =
-            PlayerInfo.current.playerStats.totalGold - (level.goldRequirement);
+        PlayerInfo.current.totalGold = PlayerInfo.current.totalGold - (level.goldRequirement);
 
         this.boardManager.blockCount = this.boardManager.blockCount + 1;
         level.charge = level.charge - 1;
@@ -94,7 +93,7 @@ public class MainGamePlayerManager : MonoBehaviour
 
     public void handleTick()
     {
-        PlayerInfo.current.playerStats.totalGold =
-            PlayerInfo.current.playerStats.totalGold + this.boardManager.goldPerClick;
+        PlayerInfo.current.totalGold =
+            PlayerInfo.current.totalGold + this.boardManager.goldPerClick;
     }
 }

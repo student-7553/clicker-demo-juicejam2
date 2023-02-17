@@ -168,6 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec73c39bc0b32d44784da6aee16bdd4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _blockCount: 0
   buildLevel: 0
   boardCellPrefab: {fileID: 6076731841658825077, guid: 33217cd3465dfa544bfb6be2ea77509b, type: 3}
   blocksHandler: {fileID: 11400000, guid: 2258e414c055c514881e4d9dd0c1781f, type: 2}
@@ -181,7 +182,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 397331859}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af5905c2715541b4a9f13e1f4c44ec5e, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d942cfcbff64e84d9676dfacdfc03e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blocks: {fileID: 11400000, guid: 2258e414c055c514881e4d9dd0c1781f, type: 2}
@@ -266,9 +267,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 0.9994929
-    height: 1
+    y: 0.11560694
+    width: 0.69357896
+    height: 0.6936416
   near clip plane: 0.3
   far clip plane: 100
   field of view: 60
@@ -806,7 +807,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1346919294}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.55625
+  m_Size: 0.6275
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1082,6 +1083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9862b3136ccfad4e8c7f6952d38b461, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalGold: 0
   blocksHandler: {fileID: 11400000, guid: 2258e414c055c514881e4d9dd0c1781f, type: 2}
 --- !u!114 &1420513478
 MonoBehaviour:

@@ -71,9 +71,22 @@ public class BoardManager : MonoBehaviour
             {
                 continue;
             }
+            int value = getBlocksValue(cellPosition);
             newGoldPerClick = newGoldPerClick + cellPosition.cell.runeStats.goldPerClickIncease;
         }
+
         goldPerClick = newGoldPerClick;
+
+        int getBlocksValue(CellWithPosition cellPosition)
+        {
+            int value = 0;
+
+            value = value + cellPosition.cell.runeStats.goldPerClickIncease;
+
+            List<BoardCell> adjacentCells = this.getAllAdjacentCell(cellPosition);
+            // adjacentCells
+            return value;
+        }
     }
 
     public void enterBuildPrep(ClassBlock prepLevel)
@@ -205,5 +218,60 @@ public class BoardManager : MonoBehaviour
                 );
             }
         }
+    }
+
+    private List<BoardCell> getAllAdjacentCell(CellWithPosition cellPosition)
+    {
+        List<BoardCell> cells = new List<BoardCell>();
+        if (cellPosition.positionY != 0)
+        {
+            // Add the bottom row
+            if (cellPosition.positionY % 2 == 0)
+            {
+                //is even
+                // get right and same
+                cells.Add(board[cellPosition.positionX][cellPosition.positionY - 1]);
+                cells.Add(board[cellPosition.positionX + 1][cellPosition.positionY - 1]);
+            }
+            else
+            {
+                //is odd
+                // get left and same
+                cells.Add(board[cellPosition.positionX][cellPosition.positionY - 1]);
+                cells.Add(board[cellPosition.positionX - 1][cellPosition.positionY - 1]);
+            }
+        }
+        if (cellPosition.positionY != board.Count - 1)
+        {
+            // Add the top row
+
+            if (cellPosition.positionY % 2 == 0)
+            {
+                //is even
+                // get right and same
+                cells.Add(board[cellPosition.positionX][cellPosition.positionY + 1]);
+                cells.Add(board[cellPosition.positionX + 1][cellPosition.positionY + 1]);
+            }
+            else
+            {
+                //is odd
+                // get left and same
+
+                cells.Add(board[cellPosition.positionX][cellPosition.positionY + 1]);
+                cells.Add(board[cellPosition.positionX - 1][cellPosition.positionY + 1]);
+            }
+        }
+        if (cellPosition.positionX != 0)
+        {
+            // get left
+            cells.Add(board[cellPosition.positionX - 1][cellPosition.positionY]);
+        }
+
+        if (cellPosition.positionX != board[cellPosition.positionX].Count - 1)
+        {
+            // get right
+            cells.Add(board[cellPosition.positionX + 1][cellPosition.positionY]);
+        }
+        return cells;
     }
 }

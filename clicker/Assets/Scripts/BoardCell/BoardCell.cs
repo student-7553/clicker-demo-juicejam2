@@ -20,7 +20,7 @@ public class BoardCell : MonoBehaviour
 
     private BoardManager parentBoardManager;
 
-    // **************** MIDDLEWARE ******************
+    // **************** PROXY ******************
 
     public bool isAlive
     {

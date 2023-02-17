@@ -43,7 +43,7 @@ public class LevelButtonHandler : MonoBehaviour
         {
             return;
         }
-        if (PlayerInfo.current.playerStats.totalGold >= (level.goldRequirement) && level.charge > 0)
+        if (PlayerInfo.current.totalGold >= (level.goldRequirement) && level.charge > 0)
         {
             Button buttonObject = GetComponent(typeof(Button)) as Button;
             buttonObject.interactable = true;

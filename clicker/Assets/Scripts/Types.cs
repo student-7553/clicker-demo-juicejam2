@@ -20,6 +20,15 @@ public struct BoardCellRuneStats
     public int boosterAllPower;
 }
 
+public enum CellRuneType
+{
+    dead,
+    goldPerClick,
+    batteryPower,
+    boosterPower,
+    boosterAllPower
+}
+
 public struct CellWithPosition
 {
     public BoardCell cell;

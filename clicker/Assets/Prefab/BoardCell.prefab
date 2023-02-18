@@ -184,12 +184,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isAlive: 0
-  levelsHandler: {fileID: 0}
+  blocksHandler: {fileID: 11400000, guid: 2258e414c055c514881e4d9dd0c1781f, type: 2}
   runeGameObject: {fileID: 1459313672970495705}
   runeStats:
     goldPerClickIncease: 0
-    goldPeSecIncease: 0
-    boostAdjacentAll: 0
+    batteryPower: 0
+    boosterPower: 0
+    boosterAllPower: 0
+  runeType: 0
+  isBooster: 0
+  powerValue: 0
 --- !u!60 &426392156911509310
 PolygonCollider2D:
   m_ObjectHideFlags: 0

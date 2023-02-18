@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BoardManager : MonoBehaviour
@@ -9,7 +10,7 @@ public class BoardManager : MonoBehaviour
     [System.NonSerialized]
     public int goldPerClick = 0;
 
-    private Color boardBorderColor;
+    // private Color boardBorderColor;
 
     [SerializeField]
     private int _blockCount;
@@ -20,15 +21,13 @@ public class BoardManager : MonoBehaviour
         {
             _blockCount = value;
             this.handleBlockCountBorder(_blockCount);
-
-            // Connect this with the actuall price on
         }
     }
 
     // ---------------- Build prep ----------------------
 
     [System.NonSerialized]
-    public bool buildPrep = false;
+    public bool inBuildPrep = false;
     public int buildLevel;
 
     // ---------------- OUTSIDE  ----------------------
@@ -52,50 +51,110 @@ public class BoardManager : MonoBehaviour
     private void Start()
     {
         // Don't have save file
-        board = this.generateBoard();
+        board = this.generateEmptyBoard();
 
         // Initlize the first cell
         BoardCell centerCell = board[(int)variables.size / 2][(int)variables.size / 2];
-        centerCell.initToLevel(blocksHandler.blocks[0]);
-
-        boardBorderColor = blocksHandler.startBorderColor;
+        this.handleBlockBuild(centerCell, blocksHandler.blocks[0]);
     }
 
     public void resyncGoldPerClick()
     {
         int newGoldPerClick = 0;
-
+        // apply all the stats and then add them.
         foreach (CellWithPosition cellPosition in getAllCells())
         {
             if (!cellPosition.cell.isAlive)
             {
                 continue;
             }
-            int value = getBlocksValue(cellPosition);
-            newGoldPerClick = newGoldPerClick + cellPosition.cell.runeStats.goldPerClickIncease;
+            newGoldPerClick = newGoldPerClick + this.getPowerValueOfCell(cellPosition);
         }
 
-        goldPerClick = newGoldPerClick;
+        this.goldPerClick = newGoldPerClick;
+    }
 
-        int getBlocksValue(CellWithPosition cellPosition)
+    public void handleBlockBuild(BoardCell boardCell, ClassBlock level)
+    {
+        boardCell.initToLevel(level);
+        if (this.inBuildPrep)
+        {
+            this.exitBuildPrep();
+        }
+
+        PlayerInfo.current.totalGold = PlayerInfo.current.totalGold - (level.goldRequirement);
+
+        this.resyncGoldPerClick();
+        this.blockCount = this.blockCount + 1;
+        level.charge = level.charge - 1;
+    }
+
+    private int getPowerValueOfCell(CellWithPosition cellPosition)
+    {
+        if (cellPosition.cell.runeType == CellRuneType.goldPerClick)
+        {
+            return cellPosition.cell.powerValue;
+        }
+
+        List<CellWithPosition> adjacentCells = this.getAllAdjacentCell(cellPosition);
+
+        if (cellPosition.cell.runeType == CellRuneType.batteryPower)
+        {
+            bool isAdjacentToBase = adjacentCells.Any(
+                (cellPosition) => cellPosition.cell.runeType == CellRuneType.goldPerClick
+            );
+            return isAdjacentToBase ? cellPosition.cell.powerValue : 0;
+        }
+        if (cellPosition.cell.runeType == CellRuneType.boosterPower)
         {
             int value = 0;
+            List<CellWithPosition> allowedCells = adjacentCells
+                .Where(
+                    (cellPosition) =>
+                        cellPosition.cell.runeType == CellRuneType.goldPerClick
+                        || cellPosition.cell.runeType == CellRuneType.batteryPower
+                )
+                .ToList();
 
-            value = value + cellPosition.cell.runeStats.goldPerClickIncease;
+            Debug.Log(allowedCells.Count);
 
-            List<BoardCell> adjacentCells = this.getAllAdjacentCell(cellPosition);
-            // adjacentCells
+            foreach (CellWithPosition singleCellPosition in allowedCells)
+            {
+                int cellPowerValue = this.getPowerValueOfCell(singleCellPosition);
+                value = value + cellPowerValue;
+            }
             return value;
         }
+
+        if (cellPosition.cell.runeType == CellRuneType.boosterAllPower)
+        {
+            int value = 0;
+            List<CellWithPosition> allowedCells = adjacentCells
+                .Where(
+                    (cellPosition) =>
+                        cellPosition.cell.runeType == CellRuneType.goldPerClick
+                        || cellPosition.cell.runeType == CellRuneType.batteryPower
+                        || cellPosition.cell.runeType == CellRuneType.boosterPower
+                )
+                .ToList();
+
+            foreach (CellWithPosition singleCellPosition in allowedCells)
+            {
+                int cellPowerValue = this.getPowerValueOfCell(singleCellPosition);
+                value = cellPowerValue + cellPowerValue;
+            }
+            return value;
+        }
+        return 0;
     }
 
     public void enterBuildPrep(ClassBlock prepLevel)
     {
-        if (this.buildPrep == true)
+        if (this.inBuildPrep == true)
         {
             return;
         }
-        this.buildPrep = true;
+        this.inBuildPrep = true;
         this.buildLevel = prepLevel.level;
         foreach (CellWithPosition cellPosition in getAllCells())
         {
@@ -105,11 +164,11 @@ public class BoardManager : MonoBehaviour
 
     public void exitBuildPrep()
     {
-        if (this.buildPrep == false)
+        if (this.inBuildPrep == false)
         {
             return;
         }
-        this.buildPrep = false;
+        this.inBuildPrep = false;
         this.buildLevel = 0;
         foreach (CellWithPosition cellPosition in getAllCells())
         {
@@ -120,38 +179,17 @@ public class BoardManager : MonoBehaviour
     private void handleBlockCountBorder(float newBlockCount)
     {
         float maxLevels = blocksHandler.blocks.Count;
+
         float percentage = newBlockCount / maxLevels;
-
-        float differnce =
-            (blocksHandler.startBorderColor.r - blocksHandler.endBorderColor.r) / percentage;
-
-        float newR =
-            blocksHandler.startBorderColor.r
-            + ((blocksHandler.endBorderColor.r - blocksHandler.startBorderColor.r) * percentage);
-        float newG =
-            blocksHandler.startBorderColor.g
-            + ((blocksHandler.endBorderColor.g - blocksHandler.startBorderColor.g) * percentage);
-        float newB =
-            blocksHandler.startBorderColor.b
-            + ((blocksHandler.endBorderColor.b - blocksHandler.startBorderColor.b) * percentage);
-        float newA =
-            blocksHandler.startBorderColor.a
-            + ((blocksHandler.endBorderColor.a - blocksHandler.startBorderColor.a) * percentage);
-
-        Color newBorderColor = new Color(newR, newG, newB, newA);
-        boardBorderColor = newBorderColor;
 
         foreach (CellWithPosition cellPosition in getAllCells())
         {
-            cellPosition.cell.changeBorderColor(boardBorderColor);
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (IdkManager.current != null)
-        {
-            IdkManager.current.clearBoardManager();
+            if (!cellPosition.cell.isAlive)
+            {
+                continue;
+            }
+            Debug.Log(percentage);
+            cellPosition.cell.changeBorderColor(percentage);
         }
     }
 
@@ -170,7 +208,7 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    private List<List<BoardCell>> generateBoard()
+    private List<List<BoardCell>> generateEmptyBoard()
     {
         List<List<BoardCell>> emptyBoard = new List<List<BoardCell>>();
         for (int columnIndex = 0; columnIndex < variables.size; columnIndex++)
@@ -178,7 +216,7 @@ public class BoardManager : MonoBehaviour
             List<BoardCell> emptyRow = new List<BoardCell>();
             for (int rowIndex = 0; rowIndex < variables.size; rowIndex++)
             {
-                Vector3 cellSpawnPostion = getCellPosition(rowIndex, columnIndex);
+                Vector3 cellSpawnPostion = this.getCellPosition(rowIndex, columnIndex);
 
                 GameObject cellGameObject = Instantiate(
                     boardCellPrefab,
@@ -192,86 +230,114 @@ public class BoardManager : MonoBehaviour
             emptyBoard.Add(emptyRow);
         }
         return emptyBoard;
+    }
 
-        Vector3 getCellPosition(int rowIndex, int columnIndex)
+    private Vector3 getCellPosition(int rowIndex, int columnIndex)
+    {
+        if (columnIndex % 2 == 0)
         {
-            if (columnIndex % 2 == 0)
-            {
-                return new Vector3(
-                    variables.tempAnchorPoint.x + (variables.gridSpace * rowIndex),
-                    variables.tempAnchorPoint.y
-                        + (variables.gridSpace * columnIndex)
-                        - (variables.bottomOffsetSpace * columnIndex),
-                    0f
-                );
-            }
-            else
-            {
-                return new Vector3(
-                    variables.tempAnchorPoint.x
-                        + (variables.gridSpace * rowIndex)
-                        - (variables.gridSpace / 2),
-                    variables.tempAnchorPoint.y
-                        + (variables.gridSpace * columnIndex)
-                        - (variables.bottomOffsetSpace * columnIndex),
-                    0f
-                );
-            }
+            return new Vector3(
+                variables.tempAnchorPoint.x + (variables.gridSpace * rowIndex),
+                variables.tempAnchorPoint.y
+                    + (variables.gridSpace * columnIndex)
+                    - (variables.bottomOffsetSpace * columnIndex),
+                0f
+            );
+        }
+        else
+        {
+            return new Vector3(
+                variables.tempAnchorPoint.x
+                    + (variables.gridSpace * rowIndex)
+                    - (variables.gridSpace / 2),
+                variables.tempAnchorPoint.y
+                    + (variables.gridSpace * columnIndex)
+                    - (variables.bottomOffsetSpace * columnIndex),
+                0f
+            );
         }
     }
 
-    private List<BoardCell> getAllAdjacentCell(CellWithPosition cellPosition)
+    private List<CellWithPosition> getAllAdjacentCell(CellWithPosition cellPosition)
     {
-        List<BoardCell> cells = new List<BoardCell>();
+        List<CellWithPosition> cells = new List<CellWithPosition>();
         if (cellPosition.positionY != 0)
         {
-            // Add the bottom row
-            if (cellPosition.positionY % 2 == 0)
-            {
-                //is even
-                // get right and same
-                cells.Add(board[cellPosition.positionX][cellPosition.positionY - 1]);
-                cells.Add(board[cellPosition.positionX + 1][cellPosition.positionY - 1]);
-            }
-            else
-            {
-                //is odd
-                // get left and same
-                cells.Add(board[cellPosition.positionX][cellPosition.positionY - 1]);
-                cells.Add(board[cellPosition.positionX - 1][cellPosition.positionY - 1]);
-            }
+            cells.Add(
+                new CellWithPosition(
+                    board[cellPosition.positionY - 1][cellPosition.positionX],
+                    cellPosition.positionY - 1,
+                    cellPosition.positionX
+                )
+            );
+
+            cells.Add(
+                cellPosition.positionY % 2 == 0
+                    ? new CellWithPosition(
+                        board[cellPosition.positionY - 1][cellPosition.positionX + 1],
+                        cellPosition.positionY - 1,
+                        cellPosition.positionX + 1
+                    )
+                    : new CellWithPosition(
+                        board[cellPosition.positionY - 1][cellPosition.positionX - 1],
+                        cellPosition.positionY - 1,
+                        cellPosition.positionX - 1
+                    )
+            );
         }
         if (cellPosition.positionY != board.Count - 1)
         {
-            // Add the top row
+            cells.Add(
+                new CellWithPosition(
+                    board[cellPosition.positionY + 1][cellPosition.positionX],
+                    cellPosition.positionY + 1,
+                    cellPosition.positionX
+                )
+            );
 
-            if (cellPosition.positionY % 2 == 0)
-            {
-                //is even
-                // get right and same
-                cells.Add(board[cellPosition.positionX][cellPosition.positionY + 1]);
-                cells.Add(board[cellPosition.positionX + 1][cellPosition.positionY + 1]);
-            }
-            else
-            {
-                //is odd
-                // get left and same
-
-                cells.Add(board[cellPosition.positionX][cellPosition.positionY + 1]);
-                cells.Add(board[cellPosition.positionX - 1][cellPosition.positionY + 1]);
-            }
+            cells.Add(
+                cellPosition.positionY % 2 == 0
+                    ? new CellWithPosition(
+                        board[cellPosition.positionY + 1][cellPosition.positionX + 1],
+                        cellPosition.positionY + 1,
+                        cellPosition.positionX + 1
+                    )
+                    : new CellWithPosition(
+                        board[cellPosition.positionY + 1][cellPosition.positionX - 1],
+                        cellPosition.positionY + 1,
+                        cellPosition.positionX - 1
+                    )
+            );
         }
         if (cellPosition.positionX != 0)
         {
-            // get left
-            cells.Add(board[cellPosition.positionX - 1][cellPosition.positionY]);
+            cells.Add(
+                new CellWithPosition(
+                    board[cellPosition.positionY][cellPosition.positionX - 1],
+                    cellPosition.positionY,
+                    cellPosition.positionX - 1
+                )
+            );
         }
 
         if (cellPosition.positionX != board[cellPosition.positionX].Count - 1)
         {
-            // get right
-            cells.Add(board[cellPosition.positionX + 1][cellPosition.positionY]);
+            cells.Add(
+                new CellWithPosition(
+                    board[cellPosition.positionY][cellPosition.positionX + 1],
+                    cellPosition.positionY,
+                    cellPosition.positionX + 1
+                )
+            );
         }
-        return cells;
+        return cells.Where((cellPosition) => cellPosition.cell.isAlive).ToList();
+    }
+
+    private void OnDestroy()
+    {
+        if (IdkManager.current != null)
+        {
+            IdkManager.current.clearBoardManager();
+        }
     }
 }

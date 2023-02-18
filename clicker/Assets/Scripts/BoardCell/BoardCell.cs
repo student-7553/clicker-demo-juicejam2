@@ -16,6 +16,12 @@ public class BoardCell : MonoBehaviour
 
     public BoardCellRuneStats runeStats;
 
+    public CellRuneType runeType;
+
+    public bool isBooster = false;
+
+    public int powerValue;
+
     private PolygonCollider2D polygonCollider;
 
     private BoardManager parentBoardManager;
@@ -30,13 +36,13 @@ public class BoardCell : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (!isAlive && getBoardManager().buildPrep)
+        if (!isAlive && getBoardManager().inBuildPrep)
         {
             boardCellSpriteHandler.onHover();
             return;
         }
 
-        if (!isAlive || getBoardManager().buildPrep)
+        if (!isAlive || getBoardManager().inBuildPrep)
         {
             return;
         }
@@ -46,13 +52,13 @@ public class BoardCell : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (!isAlive && getBoardManager().buildPrep)
+        if (!isAlive && getBoardManager().inBuildPrep)
         {
             boardCellSpriteHandler.onHover(true);
             return;
         }
 
-        if (!isAlive || getBoardManager().buildPrep)
+        if (!isAlive || getBoardManager().inBuildPrep)
         {
             return;
         }
@@ -69,9 +75,23 @@ public class BoardCell : MonoBehaviour
         boardCellSpriteHandler.handlePrep(isAlive, true);
     }
 
-    public void changeBorderColor(Color newColor)
+    public void changeBorderColor(float percentage)
     {
-        boardCellSpriteHandler.changeBorderColor(newColor);
+        float newR =
+            blocksHandler.startBorderColor.r
+            + ((blocksHandler.endBorderColor.r - blocksHandler.startBorderColor.r) * percentage);
+        float newG =
+            blocksHandler.startBorderColor.g
+            + ((blocksHandler.endBorderColor.g - blocksHandler.startBorderColor.g) * percentage);
+        float newB =
+            blocksHandler.startBorderColor.b
+            + ((blocksHandler.endBorderColor.b - blocksHandler.startBorderColor.b) * percentage);
+        float newA =
+            blocksHandler.startBorderColor.a
+            + ((blocksHandler.endBorderColor.a - blocksHandler.startBorderColor.a) * percentage);
+
+        Color newBorderColor = new Color(newR, newG, newB, newA);
+        boardCellSpriteHandler.changeBorderColor(newBorderColor);
     }
 
     private void Awake()
@@ -93,13 +113,36 @@ public class BoardCell : MonoBehaviour
         );
     }
 
-    public void initToLevel(ClassBlock level)
+    public void initToLevel(ClassBlock block)
     {
         isAlive = true;
-        runeStats = level.runeStats;
 
-        this.boardCellSpriteHandler.changeBlock(level);
-        this.getBoardManager().resyncGoldPerClick();
+        runeStats = block.runeStats;
+
+        if (runeStats.goldPerClickIncease > 0)
+        {
+            runeType = CellRuneType.goldPerClick;
+            powerValue = runeStats.goldPerClickIncease;
+        }
+        else if (runeStats.batteryPower > 0)
+        {
+            runeType = CellRuneType.batteryPower;
+            powerValue = runeStats.batteryPower;
+        }
+        else if (runeStats.boosterPower > 0)
+        {
+            runeType = CellRuneType.boosterPower;
+            powerValue = runeStats.boosterPower;
+            isBooster = true;
+        }
+        else if (runeStats.boosterAllPower > 0)
+        {
+            runeType = CellRuneType.boosterAllPower;
+            powerValue = runeStats.boosterAllPower;
+            isBooster = true;
+        }
+
+        this.boardCellSpriteHandler.initBLock(block);
     }
 
     private BoardManager getBoardManager()

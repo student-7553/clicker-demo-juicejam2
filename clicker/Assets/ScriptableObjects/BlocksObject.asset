@@ -27,7 +27,7 @@ MonoBehaviour:
   - level: 2
     sprite: {fileID: 21300000, guid: 16987b2f2842b604d88b238202dd0314, type: 3}
     name: Battery 1
-    goldRequirement: 100
+    goldRequirement: 80
     color: {r: 0, g: 0, b: 0, a: 1}
     runeStats:
       goldPerClickIncease: 0
@@ -37,7 +37,7 @@ MonoBehaviour:
     charge: 2
   - level: 3
     sprite: {fileID: 21300000, guid: 6cf3ae8bc3d1cdb45a83ab98101b92b0, type: 3}
-    name: GoldPerClick 12
+    name: GoldPerClick 2
     goldRequirement: 500
     color: {r: 0.08266285, g: 0.11320752, b: 0.0941171, a: 1}
     runeStats:
@@ -61,12 +61,12 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: fec27010c1709fc4c8a359fc83bf4aec, type: 3}
     name: Booster
     goldRequirement: 5000
-    color: {r: 0, g: 0, b: 0, a: 0}
+    color: {r: 0, g: 0, b: 0, a: 1}
     runeStats:
       goldPerClickIncease: 0
       batteryPower: 0
       boosterPower: 1
       boosterAllPower: 0
     charge: 1
-  startBorderColor: {r: 0.8018868, g: 0.788522, b: 0.7216981, a: 1}
-  endBorderColor: {r: 0.6886792, g: 0.13903522, b: 0.13903522, a: 1}
+  startBorderColor: {r: 0.8867924, g: 0.88066185, b: 0.73118544, a: 1}
+  endBorderColor: {r: 0.7264151, g: 0.0712709, b: 0.0712709, a: 1}

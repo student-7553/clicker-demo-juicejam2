@@ -22,6 +22,7 @@ public class BoardPlayerManager : MonoBehaviour
 
         this.boardManager = IdkManager.current.getBoardManager();
         clickableLayerMask = LayerMask.GetMask("Clickable");
+
         PlayerInput.current.leftMouseClickEvent =
             PlayerInput.current.leftMouseClickEvent + handlePlayerClick;
     }
@@ -53,32 +54,20 @@ public class BoardPlayerManager : MonoBehaviour
             return;
         }
 
-        if (this.boardManager.buildPrep)
+        if (this.boardManager.inBuildPrep)
         {
-            this.handleBuildPrepClick(hit.collider.gameObject);
+            BoardCell boardCell =
+                hit.collider.gameObject.GetComponent(typeof(BoardCell)) as BoardCell;
+            if (boardCell == null || boardCell.isAlive)
+            {
+                return;
+            }
+            ClassBlock block = this.blocks.getBlock(this.boardManager.buildLevel);
+            this.boardManager.handleBlockBuild(boardCell, block);
             return;
         }
 
         this.handleClick(hit.collider.gameObject);
-    }
-
-    private void handleBuildPrepClick(GameObject cellGameObject)
-    {
-        BoardCell boardCell = cellGameObject.GetComponent(typeof(BoardCell)) as BoardCell;
-        if (boardCell == null || boardCell.isAlive)
-        {
-            return;
-        }
-        ClassBlock level = this.blocks.getBlock(this.boardManager.buildLevel);
-
-        boardCell.initToLevel(level);
-
-        this.boardManager.exitBuildPrep();
-
-        PlayerInfo.current.totalGold = PlayerInfo.current.totalGold - (level.goldRequirement);
-
-        this.boardManager.blockCount = this.boardManager.blockCount + 1;
-        level.charge = level.charge - 1;
     }
 
     private void handleClick(GameObject cellGameObject)

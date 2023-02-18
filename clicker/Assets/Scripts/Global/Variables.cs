@@ -9,4 +9,7 @@ public class Variables : ScriptableObject
     public int size = 9;
     public int blockIncrease = 10;
     public int maxiumPowerPerClick = 500;
+
+    public Color deadRuneColor;
+    public Color deadBorderColor;
 }

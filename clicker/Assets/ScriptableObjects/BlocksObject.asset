@@ -23,7 +23,7 @@ MonoBehaviour:
       batteryPower: 0
       boosterPower: 0
       boosterAllPower: 0
-    charge: 1
+    charge: 2
   - level: 2
     sprite: {fileID: 21300000, guid: 16987b2f2842b604d88b238202dd0314, type: 3}
     name: Battery 1

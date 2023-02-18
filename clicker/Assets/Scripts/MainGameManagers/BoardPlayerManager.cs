@@ -48,17 +48,24 @@ public class BoardPlayerManager : MonoBehaviour
             return;
         }
 
-        bool isCell = hit.collider.gameObject.CompareTag("Cell");
-        if (!isCell)
+        BoardCell boardCell = hit.collider.gameObject.GetComponent(typeof(BoardCell)) as BoardCell;
+        if (boardCell == null)
         {
             return;
         }
 
-        if (this.boardManager.inBuildPrep)
+        if (this.boardManager.phase == BoardPhases.destroy)
         {
-            BoardCell boardCell =
-                hit.collider.gameObject.GetComponent(typeof(BoardCell)) as BoardCell;
-            if (boardCell == null || boardCell.isAlive)
+            if (!boardCell.isAlive)
+            {
+                return;
+            }
+            this.boardManager.handleBlockDestroy(boardCell);
+        }
+
+        if (this.boardManager.phase == BoardPhases.build)
+        {
+            if (boardCell.isAlive)
             {
                 return;
             }
@@ -67,13 +74,7 @@ public class BoardPlayerManager : MonoBehaviour
             return;
         }
 
-        this.handleClick(hit.collider.gameObject);
-    }
-
-    private void handleClick(GameObject cellGameObject)
-    {
-        BoardCell boardCell = cellGameObject.GetComponent(typeof(BoardCell)) as BoardCell;
-        if (boardCell == null || !boardCell.isAlive)
+        if (!boardCell.isAlive)
         {
             return;
         }

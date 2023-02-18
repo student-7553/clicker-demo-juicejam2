@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BlockBoardhandler : MonoBehaviour
 {
-    private BoardManager boardManager;
-
     [SerializeField]
     private Blocks blocksHandler;
 
@@ -18,13 +16,6 @@ public class BlockBoardhandler : MonoBehaviour
 
     void Start()
     {
-        if (IdkManager.current == null)
-        {
-            throw new System.Exception("IdkManager is not inilized");
-        }
-
-        this.boardManager = IdkManager.current.getBoardManager();
-
         int index = 0;
         foreach (ClassBlock level in blocksHandler.blocks)
         {
@@ -42,6 +33,6 @@ public class BlockBoardhandler : MonoBehaviour
 
     public void onLevelClick(ClassBlock level)
     {
-        this.boardManager.enterBuildPrep(level);
+        IdkManager.current.getBoardManager()?.enterBuildPhase(level);
     }
 }

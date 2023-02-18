@@ -12,18 +12,21 @@ public class BoardManager : MonoBehaviour
 
     // private Color boardBorderColor;
 
-    [SerializeField]
-    private int _blockCount;
-    public int blockCount
-    {
-        get { return _blockCount; }
-        set { _blockCount = value; }
-    }
+    // [SerializeField]
+    // private int _blockCount;
+    // public int blockCount
+    // {
+    //     get { return _blockCount; }
+    //     set { _blockCount = value; }
+    // }
 
     // ---------------- Build prep ----------------------
 
     [System.NonSerialized]
-    public bool inBuildPrep = false;
+    public bool inPhase = false;
+
+    public BoardPhases phase;
+
     public int buildLevel;
 
     // ---------------- OUTSIDE  ----------------------
@@ -46,6 +49,7 @@ public class BoardManager : MonoBehaviour
 
     private void Start()
     {
+        phase = BoardPhases.normal;
         // Don't have save file
         board = this.generateEmptyBoard();
 
@@ -70,22 +74,32 @@ public class BoardManager : MonoBehaviour
         this.goldPerClick = newGoldPerClick;
     }
 
-    public void handleBlockBuild(BoardCell boardCell, ClassBlock level)
+    public void handleBlockBuild(BoardCell cell, ClassBlock block)
     {
-        boardCell.initToLevel(level);
-        if (this.inBuildPrep)
+        cell.initToBlock(block);
+        if (this.phase == BoardPhases.build)
         {
-            this.exitBuildPrep();
+            this.exitPhases();
         }
 
-        PlayerInfo.current.totalGold = PlayerInfo.current.totalGold - (level.goldRequirement);
+        PlayerInfo.current.totalGold = PlayerInfo.current.totalGold - (block.goldRequirement);
 
         this.resyncGoldPerClick();
+        this.handleBorderSync();
+        block.charge = block.charge - 1;
+    }
 
-        this.blockCount = this.blockCount + 1;
-        this.handleBlockCountBorder(this.blockCount);
+    public void handleBlockDestroy(BoardCell cell)
+    {
+        ClassBlock block = cell.currentBlock;
+        block.charge = block.charge + 1;
+        cell.destroyCurrentBlock();
+        this.resyncGoldPerClick();
 
-        level.charge = level.charge - 1;
+        if (this.phase == BoardPhases.destroy)
+        {
+            this.exitPhases();
+        }
     }
 
     private int getPowerValueOfCell(CellWithPosition cellPosition)
@@ -147,35 +161,48 @@ public class BoardManager : MonoBehaviour
         return 0;
     }
 
-    public void enterBuildPrep(ClassBlock prepLevel)
+    public void enterBuildPhase(ClassBlock prepLevel)
     {
-        if (this.inBuildPrep == true)
+        if (this.phase != BoardPhases.normal)
         {
             return;
         }
-        this.inBuildPrep = true;
+        this.phase = BoardPhases.build;
         this.buildLevel = prepLevel.level;
         foreach (CellWithPosition cellPosition in getAllCells())
         {
-            cellPosition.cell.enterBuildPrep();
+            cellPosition.cell.changePhase(BoardPhases.build);
         }
     }
 
-    public void exitBuildPrep()
+    public void enterDestoryPhase()
     {
-        if (this.inBuildPrep == false)
+        if (this.phase != BoardPhases.normal)
         {
             return;
         }
-        this.inBuildPrep = false;
-        this.buildLevel = 0;
+        this.phase = BoardPhases.destroy;
+
         foreach (CellWithPosition cellPosition in getAllCells())
         {
-            cellPosition.cell.exitBuildPrep();
+            cellPosition.cell.changePhase(BoardPhases.destroy);
         }
     }
 
-    private void handleBlockCountBorder(float newBlockCount)
+    public void exitPhases()
+    {
+        if (this.phase == BoardPhases.normal)
+        {
+            return;
+        }
+        this.phase = BoardPhases.normal;
+        foreach (CellWithPosition cellPosition in getAllCells())
+        {
+            cellPosition.cell.changePhase(BoardPhases.normal);
+        }
+    }
+
+    private void handleBorderSync()
     {
         float percentage = this.goldPerClick / variables.maxiumPowerPerClick;
 

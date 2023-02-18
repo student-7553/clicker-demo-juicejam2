@@ -14,17 +14,15 @@ public class BoardCell : MonoBehaviour
 
     private BoardCellSpriteHandler boardCellSpriteHandler;
 
-    public BoardCellRuneStats runeStats;
-
     public CellRuneType runeType;
-
-    public bool isBooster = false;
 
     public int powerValue;
 
     private PolygonCollider2D polygonCollider;
 
     private BoardManager parentBoardManager;
+
+    public ClassBlock currentBlock;
 
     // **************** PROXY ******************
 
@@ -36,13 +34,13 @@ public class BoardCell : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (!isAlive && getBoardManager().inBuildPrep)
+        if (!isAlive && getBoardManager().phase == BoardPhases.build)
         {
             boardCellSpriteHandler.onHover();
             return;
         }
 
-        if (!isAlive || getBoardManager().inBuildPrep)
+        if (!isAlive || getBoardManager().phase == BoardPhases.build)
         {
             return;
         }
@@ -52,27 +50,33 @@ public class BoardCell : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (!isAlive && getBoardManager().inBuildPrep)
+        if (!isAlive && getBoardManager().phase == BoardPhases.build)
         {
             boardCellSpriteHandler.onHover(true);
             return;
         }
 
-        if (!isAlive || getBoardManager().inBuildPrep)
+        if (!isAlive || getBoardManager().phase == BoardPhases.build)
         {
             return;
         }
         boardCellSpriteHandler.onHover(true);
     }
 
-    public void enterBuildPrep()
+    public void changePhase(BoardPhases phase)
     {
-        boardCellSpriteHandler.handlePrep(isAlive);
-    }
-
-    public void exitBuildPrep()
-    {
-        boardCellSpriteHandler.handlePrep(isAlive, true);
+        switch (phase)
+        {
+            case BoardPhases.build:
+            case BoardPhases.destroy:
+                boardCellSpriteHandler.handlePrep(isAlive);
+                break;
+            case BoardPhases.normal:
+                boardCellSpriteHandler.handlePrep(isAlive, true);
+                break;
+            default:
+                break;
+        }
     }
 
     public void changeBorderColor(float percentage)
@@ -97,6 +101,9 @@ public class BoardCell : MonoBehaviour
     private void Awake()
     {
         _isAlive = false;
+        runeType = CellRuneType.dead;
+        currentBlock = null;
+
         SpriteRenderer runeSpriteRenderer =
             runeGameObject.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
 
@@ -113,36 +120,45 @@ public class BoardCell : MonoBehaviour
         );
     }
 
-    public void initToLevel(ClassBlock block)
+    public void initToBlock(ClassBlock block)
     {
         isAlive = true;
-
-        runeStats = block.runeStats;
-
-        if (runeStats.goldPerClickIncease > 0)
+        currentBlock = block;
+        if (block.runeStats.goldPerClickIncease > 0)
         {
             runeType = CellRuneType.goldPerClick;
-            powerValue = runeStats.goldPerClickIncease;
+            powerValue = block.runeStats.goldPerClickIncease;
         }
-        else if (runeStats.batteryPower > 0)
+        else if (block.runeStats.batteryPower > 0)
         {
             runeType = CellRuneType.batteryPower;
-            powerValue = runeStats.batteryPower;
+            powerValue = block.runeStats.batteryPower;
         }
-        else if (runeStats.boosterPower > 0)
+        else if (block.runeStats.boosterPower > 0)
         {
             runeType = CellRuneType.boosterPower;
-            powerValue = runeStats.boosterPower;
-            isBooster = true;
+            powerValue = block.runeStats.boosterPower;
         }
-        else if (runeStats.boosterAllPower > 0)
+        else if (block.runeStats.boosterAllPower > 0)
         {
             runeType = CellRuneType.boosterAllPower;
-            powerValue = runeStats.boosterAllPower;
-            isBooster = true;
+            powerValue = block.runeStats.boosterAllPower;
         }
 
-        this.boardCellSpriteHandler.initBLock(block);
+        this.boardCellSpriteHandler.changeToBlock(block);
+    }
+
+    public void destroyCurrentBlock()
+    {
+        if (!isAlive)
+        {
+            return;
+        }
+        isAlive = false;
+        runeType = CellRuneType.dead;
+        powerValue = 0;
+        currentBlock = null;
+        this.boardCellSpriteHandler.changeToBlock(null);
     }
 
     private BoardManager getBoardManager()

@@ -38,8 +38,15 @@ public class BoardCellSpriteHandler
         );
     }
 
-    public void initBLock(ClassBlock _currentBlock)
+    public void changeToBlock(ClassBlock _currentBlock)
     {
+        if (_currentBlock == null)
+        {
+            currentBlock = null;
+            runeSpriteRenderer.sprite = null;
+            return;
+        }
+
         currentBlock = _currentBlock;
         runeSpriteRenderer.sprite = _currentBlock.sprite;
         runeSpriteRenderer.color = _currentBlock.color;

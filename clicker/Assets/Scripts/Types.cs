@@ -29,6 +29,13 @@ public enum CellRuneType
     boosterAllPower
 }
 
+public enum BoardPhases
+{
+    normal,
+    build,
+    destroy
+}
+
 public struct CellWithPosition
 {
     public BoardCell cell;

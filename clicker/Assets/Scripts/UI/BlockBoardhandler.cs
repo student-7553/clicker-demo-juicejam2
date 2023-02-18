@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelBoardhandler : MonoBehaviour
+public class BlockBoardhandler : MonoBehaviour
 {
     private BoardManager boardManager;
 
@@ -32,8 +32,8 @@ public class LevelBoardhandler : MonoBehaviour
             GameObject buttonObject = Instantiate(buttonPrefab, this.transform);
             buttons.Add(buttonObject);
 
-            LevelButtonHandler buttonHandler =
-                buttonObject.GetComponent(typeof(LevelButtonHandler)) as LevelButtonHandler;
+            BlockButtonHandler buttonHandler =
+                buttonObject.GetComponent(typeof(BlockButtonHandler)) as BlockButtonHandler;
             buttonHandler.initlize(level, onLevelClick);
 
             buttonObject.transform.localPosition = new Vector3(0, (-50 * index) - initYPosition, 0);

@@ -8,4 +8,5 @@ public class Variables : ScriptableObject
     public float bottomOffsetSpace = 0.12f;
     public int size = 9;
     public int blockIncrease = 10;
+    public int maxiumPowerPerClick = 500;
 }

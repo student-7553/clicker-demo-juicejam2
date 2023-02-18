@@ -17,11 +17,7 @@ public class BoardManager : MonoBehaviour
     public int blockCount
     {
         get { return _blockCount; }
-        set
-        {
-            _blockCount = value;
-            this.handleBlockCountBorder(_blockCount);
-        }
+        set { _blockCount = value; }
     }
 
     // ---------------- Build prep ----------------------
@@ -85,7 +81,10 @@ public class BoardManager : MonoBehaviour
         PlayerInfo.current.totalGold = PlayerInfo.current.totalGold - (level.goldRequirement);
 
         this.resyncGoldPerClick();
+
         this.blockCount = this.blockCount + 1;
+        this.handleBlockCountBorder(this.blockCount);
+
         level.charge = level.charge - 1;
     }
 
@@ -178,9 +177,7 @@ public class BoardManager : MonoBehaviour
 
     private void handleBlockCountBorder(float newBlockCount)
     {
-        float maxLevels = blocksHandler.blocks.Count;
-
-        float percentage = newBlockCount / maxLevels;
+        float percentage = this.goldPerClick / variables.maxiumPowerPerClick;
 
         foreach (CellWithPosition cellPosition in getAllCells())
         {
@@ -188,7 +185,6 @@ public class BoardManager : MonoBehaviour
             {
                 continue;
             }
-            Debug.Log(percentage);
             cellPosition.cell.changeBorderColor(percentage);
         }
     }

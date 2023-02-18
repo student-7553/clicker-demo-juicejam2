@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine.UI;
 using System;
 
-public class LevelButtonHandler : MonoBehaviour
+public class BlockButtonHandler : MonoBehaviour
 {
     private ClassBlock level;
     private Action<ClassBlock> onlevelClick;

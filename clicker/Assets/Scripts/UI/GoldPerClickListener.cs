@@ -3,6 +3,9 @@ using TMPro;
 
 public class GoldPerClickListener : MonoBehaviour
 {
+    [SerializeField]
+    private BoardManager boardManager;
+
     private TextMeshProUGUI textObject;
 
     private void Awake()
@@ -12,7 +15,6 @@ public class GoldPerClickListener : MonoBehaviour
 
     private void FixedUpdate()
     {
-        BoardManager boardManager = IdkManager.current.getBoardManager();
         if (boardManager == null)
         {
             return;

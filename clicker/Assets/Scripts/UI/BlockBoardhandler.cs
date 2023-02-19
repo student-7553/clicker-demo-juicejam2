@@ -10,6 +10,9 @@ public class BlockBoardhandler : MonoBehaviour
     [SerializeField]
     private GameObject buttonPrefab;
 
+    [SerializeField]
+    private BoardManager boardManager;
+
     private List<GameObject> buttons = new List<GameObject>();
 
     private int initYPosition = 35;
@@ -33,6 +36,6 @@ public class BlockBoardhandler : MonoBehaviour
 
     public void onLevelClick(ClassBlock level)
     {
-        IdkManager.current.getBoardManager()?.enterBuildPhase(level);
+        boardManager.enterBuildPhase(level);
     }
 }

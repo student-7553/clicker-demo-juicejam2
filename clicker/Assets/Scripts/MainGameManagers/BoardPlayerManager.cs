@@ -8,21 +8,20 @@ public class BoardPlayerManager : MonoBehaviour
 
     private LayerMask clickableLayerMask;
 
+    [SerializeField]
     private BoardManager boardManager;
 
     [SerializeField]
     private Blocks blocks;
 
+    [SerializeField]
+    private ClickCombo clickCombo;
+
+    private Variables variables;
+
     private void Start()
     {
-        if (IdkManager.current == null)
-        {
-            throw new System.Exception("IdkManager is not inilized");
-        }
-
-        this.boardManager = IdkManager.current.getBoardManager();
         clickableLayerMask = LayerMask.GetMask("Clickable");
-
         PlayerInput.current.leftMouseClickEvent =
             PlayerInput.current.leftMouseClickEvent + handlePlayerClick;
     }
@@ -75,6 +74,8 @@ public class BoardPlayerManager : MonoBehaviour
     {
         PlayerInfo.current.totalGold =
             PlayerInfo.current.totalGold + this.boardManager.goldPerClick;
+
+        clickCombo.handlePlayerTick();
     }
 
     private void Awake()

@@ -9,6 +9,8 @@ public class Variables : ScriptableObject
     public int size = 9;
     public int blockIncrease = 10;
     public int maxiumPowerPerClick = 500;
+    public float comboPerTick = 0.05f;
+    public float comboDecreasePerSec = 0.1f;
 
     public Color deadRuneColor;
     public Color deadBorderColor;

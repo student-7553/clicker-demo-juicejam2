@@ -1,16 +1,13 @@
 using UnityEngine;
 
-public class MainGameLocalManagers
-{
-    public BoardManager boardManager;
-}
-
 [DefaultExecutionOrder(-10)]
 public class IdkManager : MonoBehaviour
 {
     public static IdkManager current;
 
-    private MainGameLocalManagers mainGameLocalManagers;
+    private BoardManager boardManager;
+
+    private BoardPlayerManager boardPlayerManager;
 
     private void Awake()
     {
@@ -20,21 +17,35 @@ public class IdkManager : MonoBehaviour
             return;
         }
         current = this;
-        mainGameLocalManagers = new MainGameLocalManagers();
     }
 
     public BoardManager getBoardManager()
     {
-        return mainGameLocalManagers.boardManager;
+        return boardManager;
     }
 
-    public void registerBoardManager(BoardManager manager)
+    public void registerBoardManager(BoardManager _boardManager)
     {
-        mainGameLocalManagers.boardManager = manager;
+        boardManager = _boardManager;
     }
 
     public void clearBoardManager()
     {
-        mainGameLocalManagers.boardManager = null;
+        boardManager = null;
+    }
+
+    public BoardPlayerManager getBoardPlayerManager()
+    {
+        return boardPlayerManager;
+    }
+
+    public void registerBoardPlayerManager(BoardPlayerManager _boardPlayerManager)
+    {
+        boardPlayerManager = _boardPlayerManager;
+    }
+
+    public void clearBoardPlayerManager()
+    {
+        boardPlayerManager = null;
     }
 }

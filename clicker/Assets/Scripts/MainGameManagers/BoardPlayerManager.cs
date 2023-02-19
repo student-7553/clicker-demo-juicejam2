@@ -27,16 +27,6 @@ public class BoardPlayerManager : MonoBehaviour
             PlayerInput.current.leftMouseClickEvent + handlePlayerClick;
     }
 
-    private void OnDestroy()
-    {
-        if (PlayerInput.current == null)
-        {
-            return;
-        }
-        PlayerInput.current.leftMouseClickEvent =
-            PlayerInput.current.leftMouseClickEvent - handlePlayerClick;
-    }
-
     public void handlePlayerClick()
     {
         Vector3 mousePosition = Mouse.current.position.ReadValue();
@@ -85,5 +75,24 @@ public class BoardPlayerManager : MonoBehaviour
     {
         PlayerInfo.current.totalGold =
             PlayerInfo.current.totalGold + this.boardManager.goldPerClick;
+    }
+
+    private void Awake()
+    {
+        if (IdkManager.current != null)
+        {
+            IdkManager.current.registerBoardPlayerManager(this);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        PlayerInput.current.leftMouseClickEvent =
+            PlayerInput.current.leftMouseClickEvent - handlePlayerClick;
+
+        if (IdkManager.current != null)
+        {
+            IdkManager.current.clearBoardPlayerManager();
+        }
     }
 }

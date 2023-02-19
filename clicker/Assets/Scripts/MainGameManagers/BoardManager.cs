@@ -10,16 +10,6 @@ public class BoardManager : MonoBehaviour
     [System.NonSerialized]
     public int goldPerClick = 0;
 
-    // private Color boardBorderColor;
-
-    // [SerializeField]
-    // private int _blockCount;
-    // public int blockCount
-    // {
-    //     get { return _blockCount; }
-    //     set { _blockCount = value; }
-    // }
-
     // ---------------- Build prep ----------------------
 
     [System.NonSerialized]
@@ -38,14 +28,6 @@ public class BoardManager : MonoBehaviour
 
     [SerializeField]
     private Variables variables;
-
-    private void Awake()
-    {
-        if (IdkManager.current != null)
-        {
-            IdkManager.current.registerBoardManager(this);
-        }
-    }
 
     private void Start()
     {
@@ -354,6 +336,14 @@ public class BoardManager : MonoBehaviour
             );
         }
         return cells.Where((cellPosition) => cellPosition.cell.isAlive).ToList();
+    }
+
+    private void Awake()
+    {
+        if (IdkManager.current != null)
+        {
+            IdkManager.current.registerBoardManager(this);
+        }
     }
 
     private void OnDestroy()

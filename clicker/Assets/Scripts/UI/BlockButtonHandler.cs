@@ -7,7 +7,6 @@ public class BlockButtonHandler : MonoBehaviour
 {
     private ClassBlock level;
     private Action<ClassBlock> onlevelClick;
-    private BoardManager boardManager;
     private TextMeshProUGUI buttonText;
 
     public void OnClick()
@@ -25,11 +24,6 @@ public class BlockButtonHandler : MonoBehaviour
         this.onlevelClick = _onLevelClick;
         this.buttonText =
             gameObject.GetComponentInChildren(typeof(TextMeshProUGUI)) as TextMeshProUGUI;
-        this.boardManager = IdkManager.current.getBoardManager();
-        if (boardManager == null)
-        {
-            throw new Exception("boardManager is null");
-        }
         this.buttonText.text = level.name + "/" + level.goldRequirement + "/" + level.charge;
     }
 

@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 7504
+  controlID: 25
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 7505
+  controlID: 26
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -192,8 +192,8 @@ MonoBehaviour:
     y: 0
     width: 470.39996
     height: 318.4
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -245,8 +245,8 @@ MonoBehaviour:
     y: 0
     width: 356.80005
     height: 722.8
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -625,9 +625,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 48.61872, y: 39.605743, z: -2.975349}
+    m_Target: {x: 467.53455, y: 407.65024, z: -7.8613586}
     speed: 2
-    m_Value: {x: 51.873585, y: 42.319042, z: -3.067797}
+    m_Value: {x: 467.53455, y: 407.65024, z: -7.8613586}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -678,9 +678,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 196.19733
+    m_Target: 549.4611
     speed: 2
-    m_Value: 205.44223
+    m_Value: 549.4611
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -736,9 +736,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: b8ef0200
-      m_LastClickedID: 192440
-      m_ExpandedIDs: b425ffff922dffff465affffca8effff0ca2ffff7eb3ffff72c4ffff96e2ffff28fbffffaa6e0000b86e0000d06e0000ea6e0000fc6e0000c68d010092940100fc95010018a5010054c90100080b020014330200ca500200845502005a7b02008c85020042bb0200
+      m_SelectedIDs: ac6e0000
+      m_LastClickedID: 28332
+      m_ExpandedIDs: 28fbffffa26e0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -803,36 +803,36 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/ScriptableObjects
+    - Assets/Scripts/UI
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/ScriptableObjects
+  - Assets/Scripts/UI
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Snoo\Documents\unity\gamejam-juicejam2-2023\clicker
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 88.600006}
-    m_SelectedIDs: 9a710000
-    m_LastClickedID: 29082
-    m_ExpandedIDs: 000000005e71000060710000627100006471000066710000687100006a7100006c7100006e7100007071000072710000747100009c710000ec8a0000fa8a0000108c0000ce91000000ca9a3b
+    m_SelectedIDs: d8710000
+    m_LastClickedID: 29144
+    m_ExpandedIDs: 0000000080710000827100008471000086710000887100008a7100008c7100008e71000090710000927100009471000096710000987100009a7100009c7100009e710000ba71000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: PixelArtGUI
-      m_OriginalName: PixelArtGUI
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 35564
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 9}
     m_SearchString: 
@@ -846,7 +846,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000060710000627100006471000066710000687100006a7100006c7100006e710000707100007271000074710000128a0000ec8a0000fa8a0000ce91000000ca9a3b
+    m_ExpandedIDs: 0000000080710000827100008471000086710000887100008a7100008c7100008e71000090710000927100009471000096710000987100009a7100009c7100009e710000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

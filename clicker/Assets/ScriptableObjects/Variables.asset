@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c0d0978c3cd4db42bebea3cfd6cb548, type: 3}
   m_Name: Variables
   m_EditorClassIdentifier: 
-  tempAnchorPoint: {x: -4.5, y: -1.75}
-  gridSpace: 0.677
+  tempAnchorPoint: {x: -5, y: -2.125}
+  gridSpace: 0.8
   bottomOffsetSpace: 0.12
   size: 9
   blockIncrease: 5

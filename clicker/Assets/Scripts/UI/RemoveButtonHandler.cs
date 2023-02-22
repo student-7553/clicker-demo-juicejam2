@@ -15,14 +15,12 @@ public class RemoveButtonHandler : MonoBehaviour
 
     public void onClick()
     {
-        // selfButton.navigation
         if (boardManager.phase == BoardPhases.normal)
         {
             boardManager.enterDestoryPhase();
+            return;
         }
-        else if (boardManager.phase == BoardPhases.destroy)
-        {
-            boardManager.exitPhases();
-        }
+
+        boardManager.exitPhases();
     }
 }

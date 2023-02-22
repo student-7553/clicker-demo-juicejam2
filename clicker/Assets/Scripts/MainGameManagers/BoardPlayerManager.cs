@@ -12,11 +12,12 @@ public class BoardPlayerManager : MonoBehaviour
     private BoardManager boardManager;
 
     [SerializeField]
+    private ClickCombo clickCombo;
+
+    [SerializeField]
     private Blocks blocks;
 
     [SerializeField]
-    private ClickCombo clickCombo;
-
     private Variables variables;
 
     private void Start()
@@ -72,10 +73,19 @@ public class BoardPlayerManager : MonoBehaviour
 
     public void handleTick()
     {
-        PlayerInfo.current.totalGold =
-            PlayerInfo.current.totalGold + this.boardManager.goldPerClick;
+        int effectiveGoldPerClick = this.boardManager.goldPerClick;
 
-        clickCombo.handlePlayerTick();
+        Debug.Log(variables.comboDoubleThreshhold);
+        Debug.Log(this.clickCombo.clickCombo);
+
+        if (this.clickCombo.clickCombo > variables.comboDoubleThreshhold)
+        {
+            effectiveGoldPerClick = effectiveGoldPerClick * 2;
+        }
+
+        PlayerInfo.current.totalGold = PlayerInfo.current.totalGold + effectiveGoldPerClick;
+
+        this.clickCombo.handlePlayerTick();
     }
 
     private void Awake()

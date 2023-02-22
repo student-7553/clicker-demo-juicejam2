@@ -189,6 +189,7 @@ MonoBehaviour:
   boardManager: {fileID: 397331861}
   blocks: {fileID: 11400000, guid: 2258e414c055c514881e4d9dd0c1781f, type: 2}
   clickCombo: {fileID: 397331863}
+  variables: {fileID: 11400000, guid: 420cda1e546aea445b4af7eb14437886, type: 2}
 --- !u!114 &397331863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,13 +285,13 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
-    height: 1
+    width: 1.0002464
+    height: 0.9998905
   near clip plane: 0.3
   far clip plane: 100
   field of view: 60
   orthographic: 1
-  orthographic size: 8.921875
+  orthographic size: 5.625
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -2075,7 +2076,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2249d98c145d0b04c98baa43e0387581, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bb66abab03397db49b61d78df82dd00e, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

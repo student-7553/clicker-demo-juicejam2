@@ -17,6 +17,7 @@ public class BoardManager : MonoBehaviour
 
     public BoardPhases phase;
 
+    [System.NonSerialized]
     public int buildLevel;
 
     // ---------------- OUTSIDE  ----------------------

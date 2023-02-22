@@ -14,6 +14,8 @@ public class Variables : ScriptableObject
     public float comboPerTick = 0.05f;
     public float comboDecreasePerSec = 0.1f;
 
+    public float comboDoubleThreshhold = 0.9f;
+
     public Color deadRuneColor;
     public Color deadBorderColor;
 }

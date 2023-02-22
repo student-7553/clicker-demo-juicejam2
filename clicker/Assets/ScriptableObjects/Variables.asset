@@ -18,7 +18,8 @@ MonoBehaviour:
   size: 9
   blockIncrease: 5
   maxiumPowerPerClick: 500
-  comboPerTick: 0.03
-  comboDecreasePerSec: 0.05
+  comboPerTick: 0.02
+  comboDecreasePerSec: 0.04
+  comboDoubleThreshhold: 0.85
   deadRuneColor: {r: 0, g: 0, b: 0, a: 0}
   deadBorderColor: {r: 0, g: 0, b: 0, a: 0}

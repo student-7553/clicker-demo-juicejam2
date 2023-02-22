@@ -6,7 +6,7 @@ public class ClickCombo : MonoBehaviour
 
     private float tickTimer;
 
-    // [System.NonSerialized]
+    // Range 0-1
     private float _clickCombo;
     public float clickCombo
     {

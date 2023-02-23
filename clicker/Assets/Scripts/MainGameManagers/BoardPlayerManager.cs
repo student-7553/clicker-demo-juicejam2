@@ -75,9 +75,6 @@ public class BoardPlayerManager : MonoBehaviour
     {
         int effectiveGoldPerClick = this.boardManager.goldPerClick;
 
-        Debug.Log(variables.comboDoubleThreshhold);
-        Debug.Log(this.clickCombo.clickCombo);
-
         if (this.clickCombo.clickCombo > variables.comboDoubleThreshhold)
         {
             effectiveGoldPerClick = effectiveGoldPerClick * 2;

@@ -112,8 +112,6 @@ public class BoardManager : MonoBehaviour
                 )
                 .ToList();
 
-            Debug.Log(allowedCells.Count);
-
             foreach (CellWithPosition singleCellPosition in allowedCells)
             {
                 int cellPowerValue = this.getPowerValueOfCell(singleCellPosition);

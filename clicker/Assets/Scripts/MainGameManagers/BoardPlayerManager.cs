@@ -68,10 +68,10 @@ public class BoardPlayerManager : MonoBehaviour
         {
             return;
         }
-        this.handleTick();
+        this.handleTick(boardCell);
     }
 
-    public void handleTick()
+    public void handleTick(BoardCell boardCell)
     {
         int effectiveGoldPerClick = this.boardManager.goldPerClick;
 
@@ -81,7 +81,7 @@ public class BoardPlayerManager : MonoBehaviour
         }
 
         PlayerInfo.current.totalGold = PlayerInfo.current.totalGold + effectiveGoldPerClick;
-
+        boardCell.onTick();
         this.clickCombo.handlePlayerTick();
     }
 

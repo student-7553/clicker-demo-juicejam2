@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class BoardCell : MonoBehaviour
 {
@@ -24,12 +25,27 @@ public class BoardCell : MonoBehaviour
 
     public ClassBlock currentBlock;
 
+    [SerializeField]
+    private Variables variables;
+
     // **************** PROXY ******************
 
     public bool isAlive
     {
         get { return _isAlive; }
         set { _isAlive = value; }
+    }
+
+    public void onTick()
+    {
+        StartCoroutine(handleTickEffect());
+    }
+
+    private IEnumerator handleTickEffect()
+    {
+        transform.localScale = variables.clickEffectScale;
+        yield return new WaitForSeconds(variables.clickEffectWait);
+        transform.localScale = new Vector3(1, 1, 1);
     }
 
     private void OnMouseEnter()

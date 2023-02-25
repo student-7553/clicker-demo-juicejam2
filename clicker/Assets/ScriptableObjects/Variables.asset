@@ -21,5 +21,7 @@ MonoBehaviour:
   comboPerTick: 0.02
   comboDecreasePerSec: 0.04
   comboDoubleThreshhold: 0.85
+  clickEffectWait: 0.1
+  clickEffectScale: {x: 0.85, y: 0.85, z: 1}
   deadRuneColor: {r: 0, g: 0, b: 0, a: 0}
   deadBorderColor: {r: 0, g: 0, b: 0, a: 0}

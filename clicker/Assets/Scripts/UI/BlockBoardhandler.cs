@@ -20,6 +20,10 @@ public class BlockBoardhandler : MonoBehaviour
     void Start()
     {
         int index = 0;
+
+        RectTransform prefabRectTransform =
+            buttonPrefab.GetComponent(typeof(RectTransform)) as RectTransform;
+
         foreach (ClassBlock level in blocksHandler.blocks)
         {
             index++;
@@ -28,14 +32,17 @@ public class BlockBoardhandler : MonoBehaviour
 
             BlockButtonHandler buttonHandler =
                 buttonObject.GetComponent(typeof(BlockButtonHandler)) as BlockButtonHandler;
-            buttonHandler.initlize(level, onLevelClick);
 
-            buttonObject.transform.localPosition = new Vector3(0, (-50 * index) - initYPosition, 0);
+            buttonHandler.initlize(level, onLevelClick, this.boardManager);
+
+            float topMargin = prefabRectTransform.rect.height;
+
+            buttonObject.transform.localPosition = new Vector3(0, (-topMargin * index), 0);
         }
     }
 
     public void onLevelClick(ClassBlock level)
     {
-        boardManager.enterBuildPhase(level);
+        this.boardManager.enterBuildPhase(level);
     }
 }

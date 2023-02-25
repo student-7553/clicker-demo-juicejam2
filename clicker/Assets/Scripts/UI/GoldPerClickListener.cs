@@ -1,16 +1,19 @@
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
+
+// using TMPro;
+
 
 public class GoldPerClickListener : MonoBehaviour
 {
     [SerializeField]
     private BoardManager boardManager;
 
-    private TextMeshProUGUI textObject;
+    private Text textObject;
 
     private void Awake()
     {
-        textObject = gameObject.GetComponent(typeof(TextMeshProUGUI)) as TextMeshProUGUI;
+        textObject = gameObject.GetComponent(typeof(Text)) as Text;
     }
 
     private void FixedUpdate()

@@ -10,6 +10,9 @@ public class BoardManager : MonoBehaviour
     [System.NonSerialized]
     public int goldPerClick = 0;
 
+    [System.NonSerialized]
+    public int highestLevel = 0;
+
     // ---------------- Build prep ----------------------
 
     [System.NonSerialized]
@@ -70,6 +73,11 @@ public class BoardManager : MonoBehaviour
         this.resyncGoldPerClick();
         this.handleBorderSync();
         block.charge = block.charge - 1;
+
+        if (block.level > this.highestLevel)
+        {
+            this.highestLevel = block.level;
+        }
     }
 
     public void handleBlockDestroy(BoardCell cell)

@@ -1,13 +1,13 @@
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class TotalGoldListener : MonoBehaviour
 {
-    private TextMeshProUGUI totalScoreText;
+    private Text totalScoreText;
 
     private void Awake()
     {
-        totalScoreText = gameObject.GetComponent(typeof(TextMeshProUGUI)) as TextMeshProUGUI;
+        totalScoreText = gameObject.GetComponent(typeof(Text)) as Text;
     }
 
     private void FixedUpdate()

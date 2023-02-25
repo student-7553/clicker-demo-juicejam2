@@ -5,45 +5,74 @@ using System;
 
 public class BlockButtonHandler : MonoBehaviour
 {
-    private ClassBlock level;
+    private ClassBlock block;
     private Action<ClassBlock> onlevelClick;
     private TextMeshProUGUI buttonText;
+    private BoardManager boardManager;
+    private Button buttonObject;
+
+    private bool isObfuscated;
 
     public void OnClick()
     {
-        if (level == null)
+        if (block == null)
         {
             return;
         }
-        this.onlevelClick.Invoke(level);
+        this.onlevelClick.Invoke(block);
     }
 
-    public void initlize(ClassBlock _level, Action<ClassBlock> _onLevelClick)
+    public void initlize(
+        ClassBlock _level,
+        Action<ClassBlock> _onLevelClick,
+        BoardManager _boardManager
+    )
     {
-        this.level = _level;
+        this.boardManager = _boardManager;
+        this.block = _level;
         this.onlevelClick = _onLevelClick;
         this.buttonText =
             gameObject.GetComponentInChildren(typeof(TextMeshProUGUI)) as TextMeshProUGUI;
-        this.buttonText.text = level.name + "/" + level.goldRequirement + "/" + level.charge;
+        this.buttonObject = GetComponent(typeof(Button)) as Button;
+        this.buttonText.text = block.name + "/" + block.goldRequirement + "/" + block.charge;
+        this.isObfuscated = false;
     }
 
     private void FixedUpdate()
     {
-        handleCompute();
+        this.handleState();
+        this.handleText();
     }
 
-    private void handleCompute()
+    private void handleText()
     {
-        if (level == null || PlayerInfo.current == null)
+        if (this.isObfuscated)
+        {
+            buttonText.text = "";
+        }
+        else
+        {
+            buttonText.text = this.block.name + "/" + block.goldRequirement + "/" + block.charge;
+        }
+    }
+
+    private void handleState()
+    {
+        if (block == null || PlayerInfo.current == null)
         {
             return;
         }
-        Button buttonObject = GetComponent(typeof(Button)) as Button;
 
-        bool isInteractable =
-            PlayerInfo.current.totalGold >= (level.goldRequirement) && level.charge > 0;
-        buttonObject.interactable = isInteractable;
+        this.isObfuscated = (this.boardManager.highestLevel + 1) < block.level;
+        buttonObject.interactable = this.getIsInteractable();
+    }
 
-        buttonText.text = this.level.name + "/" + level.goldRequirement + "/" + level.charge;
+    private bool getIsInteractable()
+    {
+        if (this.isObfuscated)
+        {
+            return false;
+        }
+        return PlayerInfo.current.totalGold >= (block.goldRequirement) && block.charge > 0;
     }
 }

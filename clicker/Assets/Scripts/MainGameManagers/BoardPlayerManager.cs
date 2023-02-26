@@ -20,6 +20,9 @@ public class BoardPlayerManager : MonoBehaviour
     [SerializeField]
     private Variables variables;
 
+    [SerializeField]
+    private GameObject tickTextPrefab;
+
     private void Start()
     {
         clickableLayerMask = LayerMask.GetMask("Clickable");
@@ -83,6 +86,26 @@ public class BoardPlayerManager : MonoBehaviour
         PlayerInfo.current.totalGold = PlayerInfo.current.totalGold + effectiveGoldPerClick;
         boardCell.onTick();
         this.clickCombo.handlePlayerTick();
+        this.handleTickTextSpawn(boardCell);
+    }
+
+    private void handleTickTextSpawn(BoardCell boardCell)
+    {
+        Vector3 spawnPosition = boardCell.transform.position;
+        spawnPosition.x = spawnPosition.x + 0.25f;
+
+        float randomXAdjust = Random.Range(-0.5f, 0.5f);
+
+        spawnPosition.x = spawnPosition.x + randomXAdjust;
+        spawnPosition.y = spawnPosition.y + 0.2f;
+        spawnPosition.z = 1f;
+
+        GameObject tickTextObject = Instantiate(tickTextPrefab, spawnPosition, Quaternion.identity);
+
+        TickTextHandler tickTextHandler =
+            tickTextObject.GetComponent(typeof(TickTextHandler)) as TickTextHandler;
+
+        tickTextHandler.init(this.boardManager.goldPerClick);
     }
 
     private void Awake()

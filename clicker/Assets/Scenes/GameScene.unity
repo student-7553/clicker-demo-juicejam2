@@ -413,6 +413,7 @@ MonoBehaviour:
   clickCombo: {fileID: 397331863}
   blocks: {fileID: 11400000, guid: 2258e414c055c514881e4d9dd0c1781f, type: 2}
   variables: {fileID: 11400000, guid: 420cda1e546aea445b4af7eb14437886, type: 2}
+  tickTextPrefab: {fileID: 2649398672906641477, guid: 58f106a1bf31ef84ba905b70aecd8bba, type: 3}
 --- !u!114 &397331863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,9 +508,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.13609467
-    width: 1.2234707
-    height: 1.2231879
+    y: 0
+    width: 1.0001932
+    height: 0.99982834
   near clip plane: 0.3
   far clip plane: 100
   field of view: 60
@@ -585,7 +586,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &593111984
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -6093,8 +6094,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1346919295}
   m_HandleRect: {fileID: 1346919294}
   m_Direction: 2
-  m_Value: 1.0000014
-  m_Size: 0.32875
+  m_Value: 1.0000025
+  m_Size: 0.60875
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7953,7 +7954,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 285, y: -30}
+  m_AnchoredPosition: {x: 40, y: -70}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3469103950131463072

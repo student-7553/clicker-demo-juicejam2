@@ -15,8 +15,6 @@ public class BlockBoardhandler : MonoBehaviour
 
     private List<GameObject> buttons = new List<GameObject>();
 
-    private int initYPosition = 35;
-
     void Start()
     {
         int index = 0;

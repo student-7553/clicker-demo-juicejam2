@@ -97,21 +97,35 @@ public class BoardCell : MonoBehaviour
 
     public void changeBorderColor(float percentage)
     {
-        float newR =
-            blocksHandler.startBorderColor.r
-            + ((blocksHandler.endBorderColor.r - blocksHandler.startBorderColor.r) * percentage);
-        float newG =
-            blocksHandler.startBorderColor.g
-            + ((blocksHandler.endBorderColor.g - blocksHandler.startBorderColor.g) * percentage);
-        float newB =
-            blocksHandler.startBorderColor.b
-            + ((blocksHandler.endBorderColor.b - blocksHandler.startBorderColor.b) * percentage);
-        float newA =
-            blocksHandler.startBorderColor.a
-            + ((blocksHandler.endBorderColor.a - blocksHandler.startBorderColor.a) * percentage);
+        Color borderColor = getBorderColor(percentage);
+        boardCellSpriteHandler.changeBorderColor(borderColor);
 
-        Color newBorderColor = new Color(newR, newG, newB, newA);
-        boardCellSpriteHandler.changeBorderColor(newBorderColor);
+        Color getBorderColor(float percentage)
+        {
+            float newR =
+                blocksHandler.startBorderColor.r
+                + (
+                    (blocksHandler.endBorderColor.r - blocksHandler.startBorderColor.r) * percentage
+                );
+            float newG =
+                blocksHandler.startBorderColor.g
+                + (
+                    (blocksHandler.endBorderColor.g - blocksHandler.startBorderColor.g) * percentage
+                );
+            float newB =
+                blocksHandler.startBorderColor.b
+                + (
+                    (blocksHandler.endBorderColor.b - blocksHandler.startBorderColor.b) * percentage
+                );
+            float newA =
+                blocksHandler.startBorderColor.a
+                + (
+                    (blocksHandler.endBorderColor.a - blocksHandler.startBorderColor.a) * percentage
+                );
+
+            Color newBorderColor = new Color(newR, newG, newB, newA);
+            return newBorderColor;
+        }
     }
 
     private void Awake()

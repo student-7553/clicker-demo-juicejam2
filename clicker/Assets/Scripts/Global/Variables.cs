@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "Variables", menuName = "ScriptableObjects/Variables", order = 1)]
 public class Variables : ScriptableObject
@@ -21,4 +22,6 @@ public class Variables : ScriptableObject
 
     public Color deadRuneColor;
     public Color deadBorderColor;
+
+    public List<Color> borderColors;
 }

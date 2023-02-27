@@ -36,10 +36,6 @@ public class Blocks : ScriptableObject
 
     public List<ClassBlock> blocks;
 
-    public Color startBorderColor;
-
-    public Color endBorderColor;
-
     void OnEnable()
     {
         // This should probably be a seperate class

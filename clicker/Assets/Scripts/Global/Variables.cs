@@ -20,8 +20,5 @@ public class Variables : ScriptableObject
     public float clickEffectWait = 0.5f;
     public Vector3 clickEffectScale = new Vector3(0.5f, 0.5f, 1f);
 
-    public Color deadRuneColor;
-    public Color deadBorderColor;
-
     public List<Color> borderColors;
 }

@@ -193,7 +193,7 @@ public class BoardManager : MonoBehaviour
 
     private void handleBorderSync()
     {
-        float percentage = this.goldPerClick / variables.maxiumPowerPerClick;
+        float percentage = (float)this.goldPerClick / (float)variables.maxiumPowerPerClick;
 
         foreach (CellWithPosition cellPosition in getAllCells())
         {

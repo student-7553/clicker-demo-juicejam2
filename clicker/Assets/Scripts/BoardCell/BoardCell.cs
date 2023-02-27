@@ -102,26 +102,19 @@ public class BoardCell : MonoBehaviour
 
         Color getBorderColor(float percentage)
         {
-            float newR =
-                blocksHandler.startBorderColor.r
-                + (
-                    (blocksHandler.endBorderColor.r - blocksHandler.startBorderColor.r) * percentage
-                );
-            float newG =
-                blocksHandler.startBorderColor.g
-                + (
-                    (blocksHandler.endBorderColor.g - blocksHandler.startBorderColor.g) * percentage
-                );
-            float newB =
-                blocksHandler.startBorderColor.b
-                + (
-                    (blocksHandler.endBorderColor.b - blocksHandler.startBorderColor.b) * percentage
-                );
-            float newA =
-                blocksHandler.startBorderColor.a
-                + (
-                    (blocksHandler.endBorderColor.a - blocksHandler.startBorderColor.a) * percentage
-                );
+            float faltPercentagePerColor = 1f / (float)variables.borderColors.Count;
+            int colorIndex = (int)(percentage / faltPercentagePerColor);
+
+            Color startColor = variables.borderColors[colorIndex];
+            Color endColor = variables.borderColors[colorIndex + 1];
+
+            float percentageBetweenColor =
+                (percentage % faltPercentagePerColor) / faltPercentagePerColor;
+
+            float newR = startColor.r + ((endColor.r - startColor.r) * percentageBetweenColor);
+            float newG = startColor.g + ((endColor.g - startColor.g) * percentageBetweenColor);
+            float newB = startColor.b + ((endColor.b - startColor.b) * percentageBetweenColor);
+            float newA = startColor.a + ((endColor.a - startColor.a) * percentageBetweenColor);
 
             Color newBorderColor = new Color(newR, newG, newB, newA);
             return newBorderColor;

@@ -33,7 +33,7 @@ public class BlockBoardhandler : MonoBehaviour
 
             buttonHandler.initlize(level, onLevelClick, this.boardManager);
 
-            float topMargin = prefabRectTransform.rect.height;
+            float topMargin = prefabRectTransform.rect.height + (index == 1 ? 0 : 2);
 
             buttonObject.transform.localPosition = new Vector3(0, (-topMargin * index), 0);
         }

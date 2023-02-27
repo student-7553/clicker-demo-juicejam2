@@ -17,7 +17,7 @@ MonoBehaviour:
   bottomOffsetSpace: 0.12
   size: 9
   blockIncrease: 5
-  maxiumPowerPerClick: 500
+  maxiumPowerPerClick: 100
   comboPerTick: 0.02
   comboDecreasePerSec: 0.04
   comboDoubleThreshhold: 0.85

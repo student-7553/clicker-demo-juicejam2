@@ -75,8 +75,8 @@ MonoBehaviour:
     color: {r: 0.09411765, g: 0.3529412, b: 0.08627451, a: 1}
     runeStats:
       goldPerClickIncease: 0
-      batteryPower: 0
-      boosterPower: 1
+      batteryPower: 3
+      boosterPower: 0
       boosterAllPower: 0
     charge: 6
   - level: 7
@@ -87,7 +87,7 @@ MonoBehaviour:
     runeStats:
       goldPerClickIncease: 0
       batteryPower: 0
-      boosterPower: 1
+      boosterPower: 2
       boosterAllPower: 0
     charge: 2
   - level: 8
@@ -96,9 +96,9 @@ MonoBehaviour:
     goldRequirement: 10000
     color: {r: 0.09411765, g: 0.3529412, b: 0.08627451, a: 1}
     runeStats:
-      goldPerClickIncease: 0
+      goldPerClickIncease: 3
       batteryPower: 0
-      boosterPower: 1
+      boosterPower: 0
       boosterAllPower: 0
     charge: 1
   - level: 9
@@ -109,8 +109,8 @@ MonoBehaviour:
     runeStats:
       goldPerClickIncease: 0
       batteryPower: 0
-      boosterPower: 1
-      boosterAllPower: 0
+      boosterPower: 0
+      boosterAllPower: 1
     charge: 1
   - level: 10
     sprite: {fileID: 21300000, guid: 6cf3ae8bc3d1cdb45a83ab98101b92b0, type: 3}
@@ -118,9 +118,9 @@ MonoBehaviour:
     goldRequirement: 30000
     color: {r: 0.09163401, g: 0.41509432, b: 0.29141834, a: 1}
     runeStats:
-      goldPerClickIncease: 0
+      goldPerClickIncease: 4
       batteryPower: 0
-      boosterPower: 1
+      boosterPower: 0
       boosterAllPower: 0
     charge: 1
   - level: 11
@@ -131,7 +131,7 @@ MonoBehaviour:
     runeStats:
       goldPerClickIncease: 0
       batteryPower: 0
-      boosterPower: 1
+      boosterPower: 3
       boosterAllPower: 0
     charge: 2
   startBorderColor: {r: 0.16981131, g: 0.16981131, b: 0.15122819, a: 1}

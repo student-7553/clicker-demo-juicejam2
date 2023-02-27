@@ -5,6 +5,27 @@ using System;
 
 public class BlockButtonHandler : MonoBehaviour
 {
+    //  ------------------------- child components -------------------------
+    [SerializeField]
+    private GameObject chargeTextObject;
+
+    private TextMeshProUGUI chargeText;
+
+    [SerializeField]
+    private GameObject priceTextObject;
+
+    private TextMeshProUGUI priceText;
+
+    [SerializeField]
+    private GameObject runeImageObject;
+
+    private Image runeImage;
+
+    [SerializeField]
+    private GameObject typeTextObject;
+
+    private TextMeshProUGUI typeText;
+
     private ClassBlock block;
     private Action<ClassBlock> onlevelClick;
     private TextMeshProUGUI buttonText;
@@ -36,6 +57,14 @@ public class BlockButtonHandler : MonoBehaviour
         this.buttonObject = GetComponent(typeof(Button)) as Button;
         this.buttonText.text = block.name + "/" + block.goldRequirement + "/" + block.charge;
         this.isObfuscated = false;
+
+        this.chargeText = chargeTextObject.GetComponent(typeof(TextMeshProUGUI)) as TextMeshProUGUI;
+        this.priceText = priceTextObject.GetComponent(typeof(TextMeshProUGUI)) as TextMeshProUGUI;
+        this.runeImage = runeImageObject.GetComponent(typeof(Image)) as Image;
+        this.typeText = typeTextObject.GetComponent(typeof(TextMeshProUGUI)) as TextMeshProUGUI;
+
+        this.runeImage.sprite = this.block.sprite;
+        this.typeText.text = $"{this.block.name}";
     }
 
     private void FixedUpdate()
@@ -48,11 +77,13 @@ public class BlockButtonHandler : MonoBehaviour
     {
         if (this.isObfuscated)
         {
-            buttonText.text = "";
+            this.chargeText.text = "";
+            this.priceText.text = "";
         }
         else
         {
-            buttonText.text = this.block.name + "/" + block.goldRequirement + "/" + block.charge;
+            this.chargeText.text = $"{this.block.charge}";
+            this.priceText.text = $"{this.block.goldRequirement}";
         }
     }
 

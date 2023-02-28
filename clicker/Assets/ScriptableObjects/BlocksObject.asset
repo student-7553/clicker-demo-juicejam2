@@ -31,7 +31,7 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 1}
     runeStats:
       goldPerClickIncease: 0
-      batteryPower: 1
+      batteryPower: 10
       boosterPower: 0
       boosterAllPower: 0
     charge: 2
@@ -134,5 +134,3 @@ MonoBehaviour:
       boosterPower: 3
       boosterAllPower: 0
     charge: 2
-  startBorderColor: {r: 0.16981131, g: 0.16981131, b: 0.15122819, a: 1}
-  endBorderColor: {r: 0.7169812, g: 0, b: 0, a: 1}

@@ -23,6 +23,9 @@ public class BoardPlayerManager : MonoBehaviour
     [SerializeField]
     private GameObject tickTextPrefab;
 
+    [SerializeField]
+    private GameObject clickParticlePrefab;
+
     private void Start()
     {
         clickableLayerMask = LayerMask.GetMask("Clickable");
@@ -63,7 +66,10 @@ public class BoardPlayerManager : MonoBehaviour
                 return;
             }
             ClassBlock block = this.blocks.getBlock(this.boardManager.buildLevel);
+
+            SoundEffectManager.current.triggerSoundEffect(GameSoundEffects.ON_BUILD);
             this.boardManager.handleBlockBuild(boardCell, block);
+
             return;
         }
 
@@ -84,7 +90,12 @@ public class BoardPlayerManager : MonoBehaviour
         }
 
         PlayerInfo.current.totalGold = PlayerInfo.current.totalGold + effectiveGoldPerClick;
+
+        SoundEffectManager.current.triggerSoundEffect(GameSoundEffects.ON_TICK);
         boardCell.onTick();
+
+        // Instantiate(clickParticlePrefab, boardCell.transform);
+
         this.clickCombo.handlePlayerTick();
         this.handleTickTextSpawn(boardCell);
     }

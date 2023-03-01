@@ -15,6 +15,7 @@ public class RemoveButtonHandler : MonoBehaviour
 
     public void onClick()
     {
+        SoundEffectManager.current.triggerSoundEffect(GameSoundEffects.ON_TICK);
         if (boardManager.phase == BoardPhases.normal)
         {
             boardManager.enterDestoryPhase();

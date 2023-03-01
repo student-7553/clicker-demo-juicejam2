@@ -69,6 +69,7 @@ public class BoardPlayerManager : MonoBehaviour
 
             SoundEffectManager.current.triggerSoundEffect(GameSoundEffects.ON_BUILD);
             this.boardManager.handleBlockBuild(boardCell, block);
+            Instantiate(clickParticlePrefab, boardCell.transform);
 
             return;
         }
@@ -92,9 +93,8 @@ public class BoardPlayerManager : MonoBehaviour
         PlayerInfo.current.totalGold = PlayerInfo.current.totalGold + effectiveGoldPerClick;
 
         SoundEffectManager.current.triggerSoundEffect(GameSoundEffects.ON_TICK);
-        boardCell.onTick();
 
-        // Instantiate(clickParticlePrefab, boardCell.transform);
+        boardCell.onTick();
 
         this.clickCombo.handlePlayerTick();
         this.handleTickTextSpawn(boardCell);

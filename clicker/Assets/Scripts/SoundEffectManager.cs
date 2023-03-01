@@ -16,12 +16,6 @@ public class SoundEffectManager : MonoBehaviour
     [SerializeField]
     private AudioClip onBuildSound;
 
-    [SerializeField]
-    private AudioClip fastMagic;
-
-    [SerializeField]
-    private AudioClip magicalLight;
-
     private AudioSource audioSource;
 
     private void Awake()
@@ -34,6 +28,7 @@ public class SoundEffectManager : MonoBehaviour
         current = this;
 
         this.audioSource = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
+        this.audioSource.volume = 0.75f;
     }
 
     public void triggerSoundEffect(GameSoundEffects soundEffect)

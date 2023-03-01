@@ -41,6 +41,7 @@ public class BlockBoardhandler : MonoBehaviour
 
     public void onLevelClick(ClassBlock level)
     {
+        SoundEffectManager.current.triggerSoundEffect(GameSoundEffects.ON_TICK);
         this.boardManager.enterBuildPhase(level);
     }
 }

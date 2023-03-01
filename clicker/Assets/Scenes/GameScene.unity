@@ -393,8 +393,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onTickSound: {fileID: 8300000, guid: b2c29c8da9fdf1e459a524f988bdeb96, type: 3}
   onBuildSound: {fileID: 8300000, guid: cd0640f046822274d81404d95ae16ce5, type: 3}
-  fastMagic: {fileID: 8300000, guid: 582b7d72181bf7d4da63a052b7549757, type: 3}
-  magicalLight: {fileID: 8300000, guid: 3fdd7bc38af1bc04eadfcc002c67cd8f, type: 3}
 --- !u!1 &397331859
 GameObject:
   m_ObjectHideFlags: 0
@@ -1590,7 +1588,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 4478942e146bed043b63ef288830f9c3, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0

@@ -43,13 +43,11 @@ public class BlockBoardhandler : MonoBehaviour
     {
         SoundEffectManager.current.triggerSoundEffect(GameSoundEffects.ON_TICK);
 
-        if (this.boardManager.phase == BoardPhases.normal)
+        if (this.boardManager.phase != BoardPhases.normal)
         {
             this.boardManager.exitPhases();
         }
-        else
-        {
-            this.boardManager.enterBuildPhase(level);
-        }
+
+        this.boardManager.enterBuildPhase(level);
     }
 }

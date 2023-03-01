@@ -210,7 +210,7 @@ public class BoardManager : MonoBehaviour
 
         if (this.clickCombo.isOnFire())
         {
-            effectivePercentage = effectivePercentage * 2;
+            effectivePercentage = effectivePercentage * 1.2f;
         }
 
         Color effectiveBorderColor = this.getBorderColor(effectivePercentage);
@@ -229,6 +229,11 @@ public class BoardManager : MonoBehaviour
     {
         float faltPercentagePerColor = 1f / (float)variables.borderColors.Count;
         int colorIndex = (int)(percentage / faltPercentagePerColor);
+
+        if (colorIndex + 1 > variables.borderColors.Count)
+        {
+            return variables.borderColors[variables.borderColors.Count - 1];
+        }
 
         Color startColor = variables.borderColors[colorIndex];
         Color endColor = variables.borderColors[colorIndex + 1];

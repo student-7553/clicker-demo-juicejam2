@@ -9,6 +9,7 @@ public struct StructBlock
     public string name;
     public int goldRequirement;
     public Color color;
+    public int colorPower;
     public BoardCellRuneStats runeStats;
     public int charge;
 };
@@ -19,7 +20,9 @@ public class ClassBlock
     public Sprite sprite;
     public string name;
     public int goldRequirement;
-    public Color color;
+
+    // public Color color;
+    public int colorPower;
     public BoardCellRuneStats runeStats;
     public int charge;
 };
@@ -46,7 +49,8 @@ public class Blocks : ScriptableObject
             classBlock.level = block.level;
             classBlock.sprite = block.sprite;
             classBlock.name = block.name;
-            classBlock.color = block.color;
+            // classBlock.color = block.color;
+            classBlock.colorPower = block.colorPower;
             classBlock.runeStats = block.runeStats;
             classBlock.charge = block.charge;
             classBlock.goldRequirement = block.goldRequirement;

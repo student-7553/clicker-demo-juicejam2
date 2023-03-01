@@ -98,26 +98,6 @@ public class BoardCell : MonoBehaviour
     public void changeBorderColor(Color color)
     {
         boardCellSpriteHandler.changeBorderColor(color);
-        // Color borderColor = getBorderColor(percentage);
-        // Color getBorderColor(float percentage)
-        // {
-        //     float faltPercentagePerColor = 1f / (float)variables.borderColors.Count;
-        //     int colorIndex = (int)(percentage / faltPercentagePerColor);
-
-        //     Color startColor = variables.borderColors[colorIndex];
-        //     Color endColor = variables.borderColors[colorIndex + 1];
-
-        //     float percentageBetweenColor =
-        //         (percentage % faltPercentagePerColor) / faltPercentagePerColor;
-
-        //     float newR = startColor.r + ((endColor.r - startColor.r) * percentageBetweenColor);
-        //     float newG = startColor.g + ((endColor.g - startColor.g) * percentageBetweenColor);
-        //     float newB = startColor.b + ((endColor.b - startColor.b) * percentageBetweenColor);
-        //     float newA = startColor.a + ((endColor.a - startColor.a) * percentageBetweenColor);
-
-        //     Color newBorderColor = new Color(newR, newG, newB, newA);
-        //     return newBorderColor;
-        // }
     }
 
     private void Awake()
@@ -167,7 +147,10 @@ public class BoardCell : MonoBehaviour
             powerValue = block.runeStats.boosterAllPower;
         }
 
-        this.boardCellSpriteHandler.changeToBlock(block);
+        this.boardCellSpriteHandler.changeToBlock(
+            block,
+            variables.borderColors[block.colorPower - 1]
+        );
     }
 
     public void destroyCurrentBlock()
@@ -180,7 +163,7 @@ public class BoardCell : MonoBehaviour
         runeType = CellRuneType.dead;
         powerValue = 0;
         currentBlock = null;
-        this.boardCellSpriteHandler.changeToBlock(null);
+        this.boardCellSpriteHandler.changeToBlock(null, Color.white);
     }
 
     private BoardManager getBoardManager()

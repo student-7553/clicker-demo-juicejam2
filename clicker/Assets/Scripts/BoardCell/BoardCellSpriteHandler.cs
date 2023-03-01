@@ -6,6 +6,8 @@ public class BoardCellSpriteHandler
     public SpriteRenderer borderSpriteRenderer;
     private ClassBlock currentBlock;
 
+    private Color runeColor;
+
     public float hoverBorderOpacity = 0.8f;
 
     public float defaultBorderOpacity = 0.5f;
@@ -38,7 +40,7 @@ public class BoardCellSpriteHandler
         );
     }
 
-    public void changeToBlock(ClassBlock _currentBlock)
+    public void changeToBlock(ClassBlock _currentBlock, Color runeColor)
     {
         if (_currentBlock == null)
         {
@@ -47,9 +49,14 @@ public class BoardCellSpriteHandler
             return;
         }
 
+        this.runeColor = runeColor;
+
         currentBlock = _currentBlock;
         runeSpriteRenderer.sprite = _currentBlock.sprite;
-        runeSpriteRenderer.color = _currentBlock.color;
+        // var
+        // runeSpriteRenderer.color = _currentBlock.color;
+
+        runeSpriteRenderer.color = runeColor;
     }
 
     public void handlePrep(bool isAlive, bool isExiting = false)
@@ -62,7 +69,7 @@ public class BoardCellSpriteHandler
                     runeSpriteRenderer.color.r,
                     runeSpriteRenderer.color.g,
                     runeSpriteRenderer.color.b,
-                    currentBlock == null ? 1f : currentBlock.color.a
+                    currentBlock == null ? 1f : this.runeColor.a
                 );
                 borderSpriteRenderer.color = new Color(
                     borderSpriteRenderer.color.r,

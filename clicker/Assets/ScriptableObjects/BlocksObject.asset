@@ -18,6 +18,7 @@ MonoBehaviour:
     name: 'GoldPerClick 1 '
     goldRequirement: 5
     color: {r: 0, g: 0, b: 0, a: 1}
+    colorPower: 1
     runeStats:
       goldPerClickIncease: 1
       batteryPower: 0
@@ -29,6 +30,7 @@ MonoBehaviour:
     name: Battery 1
     goldRequirement: 50
     color: {r: 0, g: 0, b: 0, a: 1}
+    colorPower: 1
     runeStats:
       goldPerClickIncease: 0
       batteryPower: 1
@@ -40,6 +42,7 @@ MonoBehaviour:
     name: GoldPerClick 2
     goldRequirement: 250
     color: {r: 0.08235294, g: 0.15294118, b: 0.11764706, a: 1}
+    colorPower: 2
     runeStats:
       goldPerClickIncease: 2
       batteryPower: 0
@@ -51,6 +54,7 @@ MonoBehaviour:
     name: Battery 2
     goldRequirement: 800
     color: {r: 0.08031328, g: 0.1509434, b: 0.11562834, a: 1}
+    colorPower: 2
     runeStats:
       goldPerClickIncease: 0
       batteryPower: 2
@@ -62,6 +66,7 @@ MonoBehaviour:
     name: Booster 1
     goldRequirement: 2000
     color: {r: 0, g: 0, b: 0, a: 1}
+    colorPower: 1
     runeStats:
       goldPerClickIncease: 0
       batteryPower: 0
@@ -73,6 +78,7 @@ MonoBehaviour:
     name: Battery 3
     goldRequirement: 2000
     color: {r: 0.09411765, g: 0.3529412, b: 0.08627451, a: 1}
+    colorPower: 3
     runeStats:
       goldPerClickIncease: 0
       batteryPower: 3
@@ -84,6 +90,7 @@ MonoBehaviour:
     name: 'Booster 2 '
     goldRequirement: 8000
     color: {r: 0.078431375, g: 0.14901961, b: 0.11372549, a: 1}
+    colorPower: 2
     runeStats:
       goldPerClickIncease: 0
       batteryPower: 0
@@ -95,6 +102,7 @@ MonoBehaviour:
     name: GoldPerClick 3
     goldRequirement: 10000
     color: {r: 0.09411765, g: 0.3529412, b: 0.08627451, a: 1}
+    colorPower: 3
     runeStats:
       goldPerClickIncease: 3
       batteryPower: 0
@@ -106,6 +114,7 @@ MonoBehaviour:
     name: Booster all 1
     goldRequirement: 25000
     color: {r: 0, g: 0, b: 0, a: 1}
+    colorPower: 1
     runeStats:
       goldPerClickIncease: 0
       batteryPower: 0
@@ -117,6 +126,7 @@ MonoBehaviour:
     name: GoldPerClick 4
     goldRequirement: 30000
     color: {r: 0.09163401, g: 0.41509432, b: 0.29141834, a: 1}
+    colorPower: 4
     runeStats:
       goldPerClickIncease: 4
       batteryPower: 0
@@ -128,6 +138,7 @@ MonoBehaviour:
     name: Booster 3
     goldRequirement: 31000
     color: {r: 0.09411765, g: 0.3529412, b: 0.08627451, a: 1}
+    colorPower: 3
     runeStats:
       goldPerClickIncease: 0
       batteryPower: 0

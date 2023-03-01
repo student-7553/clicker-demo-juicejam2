@@ -2,7 +2,11 @@ using UnityEngine;
 
 public class ClickCombo : MonoBehaviour
 {
-    public Variables variables;
+    [SerializeField]
+    private Variables variables;
+
+    [SerializeField]
+    private BoardManager boardManager;
 
     private float tickTimer;
 
@@ -21,6 +25,14 @@ public class ClickCombo : MonoBehaviour
             {
                 value = 1f;
             }
+            if (this.isOnFire() && !this.isOnFire(value))
+            {
+                this.boardManager.changeBorderColor();
+            }
+            if (!this.isOnFire() && this.isOnFire(value))
+            {
+                this.boardManager.changeBorderColor();
+            }
             _clickCombo = value;
         }
     }
@@ -34,6 +46,16 @@ public class ClickCombo : MonoBehaviour
     private void FixedUpdate()
     {
         this.handleTick();
+    }
+
+    public bool isOnFire()
+    {
+        return this.clickCombo > variables.comboDoubleThreshhold;
+    }
+
+    public bool isOnFire(float checkClickCombo)
+    {
+        return checkClickCombo > variables.comboDoubleThreshhold;
     }
 
     public void handlePlayerTick()

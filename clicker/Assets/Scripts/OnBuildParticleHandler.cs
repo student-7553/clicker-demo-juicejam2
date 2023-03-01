@@ -10,10 +10,10 @@ public class OnBuildParticleHandler : MonoBehaviour
         particle = GetComponent(typeof(ParticleSystem)) as ParticleSystem;
     }
 
-    void Start()
+    public void startParticle(Color particleColor)
     {
         var main = particle.main;
-        main.startColor = Color.red;
+        main.startColor = particleColor;
 
         particle.Play();
 

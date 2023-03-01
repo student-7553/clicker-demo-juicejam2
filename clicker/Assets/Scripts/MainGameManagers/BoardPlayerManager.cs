@@ -68,8 +68,22 @@ public class BoardPlayerManager : MonoBehaviour
             ClassBlock block = this.blocks.getBlock(this.boardManager.buildLevel);
 
             SoundEffectManager.current.triggerSoundEffect(GameSoundEffects.ON_BUILD);
+
+            GameObject onBuildParticleObject = Instantiate(
+                clickParticlePrefab,
+                boardCell.transform
+            );
+            OnBuildParticleHandler onBuildParticleHandler =
+                onBuildParticleObject.GetComponent(typeof(OnBuildParticleHandler))
+                as OnBuildParticleHandler;
+
+            Color effectiveBorderColor = this.boardManager.getBorderColor(
+                this.boardManager.borderColorPercentage
+            );
+
+            onBuildParticleHandler.startParticle(effectiveBorderColor);
+
             this.boardManager.handleBlockBuild(boardCell, block);
-            Instantiate(clickParticlePrefab, boardCell.transform);
 
             return;
         }
@@ -85,7 +99,7 @@ public class BoardPlayerManager : MonoBehaviour
     {
         int effectiveGoldPerClick = this.boardManager.goldPerClick;
 
-        if (this.clickCombo.clickCombo > variables.comboDoubleThreshhold)
+        if (this.clickCombo.isOnFire())
         {
             effectiveGoldPerClick = effectiveGoldPerClick * 2;
         }
@@ -97,10 +111,10 @@ public class BoardPlayerManager : MonoBehaviour
         boardCell.onTick();
 
         this.clickCombo.handlePlayerTick();
-        this.handleTickTextSpawn(boardCell);
+        this.handleTickTextSpawn(boardCell, effectiveGoldPerClick);
     }
 
-    private void handleTickTextSpawn(BoardCell boardCell)
+    private void handleTickTextSpawn(BoardCell boardCell, int goldPerClick)
     {
         Vector3 spawnPosition = boardCell.transform.position;
         spawnPosition.x = spawnPosition.x + 0.25f;
@@ -116,7 +130,7 @@ public class BoardPlayerManager : MonoBehaviour
         TickTextHandler tickTextHandler =
             tickTextObject.GetComponent(typeof(TickTextHandler)) as TickTextHandler;
 
-        tickTextHandler.init(this.boardManager.goldPerClick);
+        tickTextHandler.init(goldPerClick);
     }
 
     private void Awake()

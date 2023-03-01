@@ -443,6 +443,7 @@ MonoBehaviour:
   boardCellPrefab: {fileID: 6076731841658825077, guid: 33217cd3465dfa544bfb6be2ea77509b, type: 3}
   blocksHandler: {fileID: 11400000, guid: 2258e414c055c514881e4d9dd0c1781f, type: 2}
   variables: {fileID: 11400000, guid: 420cda1e546aea445b4af7eb14437886, type: 2}
+  clickCombo: {fileID: 397331863}
 --- !u!114 &397331862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,6 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   variables: {fileID: 11400000, guid: 420cda1e546aea445b4af7eb14437886, type: 2}
+  boardManager: {fileID: 397331861}
 --- !u!1 &419151630
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,8 +558,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1.0002555
-    height: 0.99943286
+    width: 0.99943054
+    height: 1
   near clip plane: 0.3
   far clip plane: 100
   field of view: 60
@@ -1329,8 +1331,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1346919295}
   m_HandleRect: {fileID: 1346919294}
   m_Direction: 2
-  m_Value: 1.0000025
-  m_Size: 0.595
+  m_Value: 1.0000023
+  m_Size: 0.5575
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1586,7 +1588,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4478942e146bed043b63ef288830f9c3, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e5474980eb6a07842b195a879d6aa977, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1

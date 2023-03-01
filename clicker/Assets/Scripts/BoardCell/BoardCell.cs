@@ -95,30 +95,29 @@ public class BoardCell : MonoBehaviour
         }
     }
 
-    public void changeBorderColor(float percentage)
+    public void changeBorderColor(Color color)
     {
-        Color borderColor = getBorderColor(percentage);
-        boardCellSpriteHandler.changeBorderColor(borderColor);
+        boardCellSpriteHandler.changeBorderColor(color);
+        // Color borderColor = getBorderColor(percentage);
+        // Color getBorderColor(float percentage)
+        // {
+        //     float faltPercentagePerColor = 1f / (float)variables.borderColors.Count;
+        //     int colorIndex = (int)(percentage / faltPercentagePerColor);
 
-        Color getBorderColor(float percentage)
-        {
-            float faltPercentagePerColor = 1f / (float)variables.borderColors.Count;
-            int colorIndex = (int)(percentage / faltPercentagePerColor);
+        //     Color startColor = variables.borderColors[colorIndex];
+        //     Color endColor = variables.borderColors[colorIndex + 1];
 
-            Color startColor = variables.borderColors[colorIndex];
-            Color endColor = variables.borderColors[colorIndex + 1];
+        //     float percentageBetweenColor =
+        //         (percentage % faltPercentagePerColor) / faltPercentagePerColor;
 
-            float percentageBetweenColor =
-                (percentage % faltPercentagePerColor) / faltPercentagePerColor;
+        //     float newR = startColor.r + ((endColor.r - startColor.r) * percentageBetweenColor);
+        //     float newG = startColor.g + ((endColor.g - startColor.g) * percentageBetweenColor);
+        //     float newB = startColor.b + ((endColor.b - startColor.b) * percentageBetweenColor);
+        //     float newA = startColor.a + ((endColor.a - startColor.a) * percentageBetweenColor);
 
-            float newR = startColor.r + ((endColor.r - startColor.r) * percentageBetweenColor);
-            float newG = startColor.g + ((endColor.g - startColor.g) * percentageBetweenColor);
-            float newB = startColor.b + ((endColor.b - startColor.b) * percentageBetweenColor);
-            float newA = startColor.a + ((endColor.a - startColor.a) * percentageBetweenColor);
-
-            Color newBorderColor = new Color(newR, newG, newB, newA);
-            return newBorderColor;
-        }
+        //     Color newBorderColor = new Color(newR, newG, newB, newA);
+        //     return newBorderColor;
+        // }
     }
 
     private void Awake()

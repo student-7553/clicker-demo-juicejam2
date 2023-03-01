@@ -13,7 +13,10 @@ public class BoardManager : MonoBehaviour
     [System.NonSerialized]
     public int highestLevel = 0;
 
-    // ---------------- Build prep ----------------------
+    [System.NonSerialized]
+    public float borderColorPercentage;
+
+    // ---------------- Phases ----------------------
 
     [System.NonSerialized]
     public bool inPhase = false;
@@ -32,6 +35,9 @@ public class BoardManager : MonoBehaviour
 
     [SerializeField]
     private Variables variables;
+
+    [SerializeField]
+    private ClickCombo clickCombo;
 
     private void Start()
     {
@@ -194,6 +200,20 @@ public class BoardManager : MonoBehaviour
     private void handleBorderSync()
     {
         float percentage = (float)this.goldPerClick / (float)variables.maxiumPowerPerClick;
+        this.borderColorPercentage = percentage;
+        this.changeBorderColor();
+    }
+
+    public void changeBorderColor()
+    {
+        float effectivePercentage = this.borderColorPercentage;
+
+        if (this.clickCombo.isOnFire())
+        {
+            effectivePercentage = effectivePercentage * 2;
+        }
+
+        Color effectiveBorderColor = this.getBorderColor(effectivePercentage);
 
         foreach (CellWithPosition cellPosition in getAllCells())
         {
@@ -201,8 +221,28 @@ public class BoardManager : MonoBehaviour
             {
                 continue;
             }
-            cellPosition.cell.changeBorderColor(percentage);
+            cellPosition.cell.changeBorderColor(effectiveBorderColor);
         }
+    }
+
+    public Color getBorderColor(float percentage)
+    {
+        float faltPercentagePerColor = 1f / (float)variables.borderColors.Count;
+        int colorIndex = (int)(percentage / faltPercentagePerColor);
+
+        Color startColor = variables.borderColors[colorIndex];
+        Color endColor = variables.borderColors[colorIndex + 1];
+
+        float percentageBetweenColor =
+            (percentage % faltPercentagePerColor) / faltPercentagePerColor;
+
+        float newR = startColor.r + ((endColor.r - startColor.r) * percentageBetweenColor);
+        float newG = startColor.g + ((endColor.g - startColor.g) * percentageBetweenColor);
+        float newB = startColor.b + ((endColor.b - startColor.b) * percentageBetweenColor);
+        float newA = startColor.a + ((endColor.a - startColor.a) * percentageBetweenColor);
+
+        Color newBorderColor = new Color(newR, newG, newB, newA);
+        return newBorderColor;
     }
 
     private IEnumerable<CellWithPosition> getAllCells()

@@ -20,7 +20,7 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 1}
     colorPower: 1
     runeStats:
-      goldPerClickIncease: 1
+      goldPerClickIncease: 10
       batteryPower: 0
       boosterPower: 0
       boosterAllPower: 0

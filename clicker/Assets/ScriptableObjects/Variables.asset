@@ -30,3 +30,8 @@ MonoBehaviour:
   - {r: 0.15145956, g: 0.22960863, b: 0.6320754, a: 1}
   - {r: 0.62339884, g: 0.15294118, b: 0.6313726, a: 1}
   - {r: 0.7176471, g: 0, b: 0, a: 0}
+  minDrag: 10
+  maxDrag: 0.8
+  minSpeed: 2.5
+  maxSpeed: 6
+  maxFoldPerClickDifference: 10

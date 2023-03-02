@@ -65,25 +65,16 @@ public class BoardPlayerManager : MonoBehaviour
             {
                 return;
             }
+
             ClassBlock block = this.blocks.getBlock(this.boardManager.buildLevel);
 
-            SoundEffectManager.current.triggerSoundEffect(GameSoundEffects.ON_BUILD);
-
-            GameObject onBuildParticleObject = Instantiate(
-                clickParticlePrefab,
-                boardCell.transform
-            );
-            OnBuildParticleHandler onBuildParticleHandler =
-                onBuildParticleObject.GetComponent(typeof(OnBuildParticleHandler))
-                as OnBuildParticleHandler;
-
-            Color effectiveBorderColor = this.boardManager.getBorderColor(
-                this.boardManager.borderColorPercentage
-            );
-
-            onBuildParticleHandler.startParticle(effectiveBorderColor);
-
+            int oldGoldPerClick = this.boardManager.goldPerClick;
             this.boardManager.handleBlockBuild(boardCell, block);
+            int newGoldPerClick = this.boardManager.goldPerClick;
+
+            int goldPerClickDifference = oldGoldPerClick - newGoldPerClick;
+            SoundEffectManager.current.triggerSoundEffect(GameSoundEffects.ON_BUILD);
+            this.generateBuildParticle(boardCell.transform, goldPerClickDifference);
 
             return;
         }
@@ -93,6 +84,20 @@ public class BoardPlayerManager : MonoBehaviour
             return;
         }
         this.handleTick(boardCell);
+    }
+
+    private void generateBuildParticle(Transform parent, int goldPerClickDifference)
+    {
+        GameObject onBuildParticleObject = Instantiate(clickParticlePrefab, parent);
+        OnBuildParticleHandler onBuildParticleHandler =
+            onBuildParticleObject.GetComponent(typeof(OnBuildParticleHandler))
+            as OnBuildParticleHandler;
+
+        Color effectiveBorderColor = this.boardManager.getBorderColor(
+            this.boardManager.borderColorPercentage
+        );
+
+        onBuildParticleHandler.startParticle(effectiveBorderColor, goldPerClickDifference);
     }
 
     public void handleTick(BoardCell boardCell)

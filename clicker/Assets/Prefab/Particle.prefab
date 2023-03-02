@@ -2687,7 +2687,7 @@ ParticleSystem:
     dampen: 0
     drag:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 10
       minScalar: 0
       maxCurve:
@@ -4883,3 +4883,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 794fca30513bb59498ea5050d0d4d1cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  variables: {fileID: 11400000, guid: 420cda1e546aea445b4af7eb14437886, type: 2}
